@@ -1,3 +1,19 @@
+:root {
+  --bg-color: #f0f2f5;
+  --container-bg: white;
+  --text-color: #333;
+  --accent-color: #4a90e2;
+  --button-hover: #357abd;
+}
+
+body.dark-mode {
+  --bg-color: #1a1a1a;
+  --container-bg: #2d2d2d;
+  --text-color: #f0f2f5;
+  --accent-color: #64b5f6;
+  --button-hover: #42a5f5;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   display: flex;
@@ -5,26 +21,44 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #f0f2f5;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#theme-btn {
+  background: none;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 20px;
 }
 
 .container {
   text-align: center;
-  background: white;
+  background: var(--container-bg);
   padding: 2rem;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
 }
 
 h1 {
-  color: #333;
   margin-bottom: 2rem;
 }
 
 .result-box {
   font-size: 3rem;
   font-weight: bold;
-  color: #4a90e2;
+  color: var(--accent-color);
   margin: 2rem 0;
   min-height: 4.5rem;
   display: flex;
@@ -32,22 +66,22 @@ h1 {
   align-items: center;
 }
 
-button {
+#draw-button {
   padding: 0.8rem 2rem;
   font-size: 1.2rem;
-  background-color: #4a90e2;
+  background-color: var(--accent-color);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.1s;
 }
 
-button:hover {
-  background-color: #357abd;
+#draw-button:hover {
+  background-color: var(--button-hover);
 }
 
-button:active {
+#draw-button:active {
   transform: translateY(2px);
 }
 
