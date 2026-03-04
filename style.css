@@ -19,12 +19,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   min-height: 100vh;
   margin: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
-  padding: 80px 0 3rem;
+  padding: 100px 0 3rem;
 }
 
 .theme-toggle {
@@ -45,7 +46,7 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.container, .form-container, .comments-container {
+.form-container, .comments-container {
   width: 90%;
   max-width: 600px;
   background: var(--container-bg);
@@ -54,43 +55,12 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
   margin-bottom: 2rem;
-  text-align: center;
 }
 
-h1, h2 {
+h2 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-}
-
-.result-box {
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--accent-color);
-  margin: 2rem 0;
-  min-height: 4.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#draw-button, .submit-btn {
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
-  width: 100%;
-}
-
-#draw-button:hover, .submit-btn:hover {
-  background-color: var(--button-hover);
-}
-
-#draw-button:active, .submit-btn:active {
-  transform: translateY(2px);
+  text-align: center;
 }
 
 .form-group {
@@ -130,11 +100,22 @@ h1, h2 {
   margin-bottom: 0;
 }
 
-.animate {
-  animation: bounce 0.5s ease;
+.submit-btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  width: 100%;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+.submit-btn:hover {
+  background-color: var(--button-hover);
+}
+
+.submit-btn:active {
+  transform: translateY(2px);
 }
