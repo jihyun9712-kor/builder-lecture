@@ -85,6 +85,17 @@ h1 {
   transform: translateY(2px);
 }
 
+.comments-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: var(--container-bg);
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
 .animate {
   animation: bounce 0.5s ease;
 }
