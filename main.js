@@ -15,7 +15,7 @@ themeBtn.addEventListener('click', () => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
-// 3단계 폼 로직
+// 4단계 폼 로직
 const form = document.getElementById('multi-step-form');
 const steps = document.querySelectorAll('.form-step');
 const indicators = document.querySelectorAll('.step');
@@ -25,15 +25,19 @@ let currentStep = 1;
 
 function updateSteps() {
   steps.forEach(step => step.classList.remove('active'));
-  indicators.forEach(ind => ind.classList.remove('active'));
+  indicators.forEach(ind => {
+    ind.classList.remove('active');
+    if (parseInt(ind.dataset.step) <= currentStep) {
+      ind.classList.add('active');
+    }
+  });
   
   document.getElementById(`step-${currentStep}`).classList.add('active');
-  document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
 }
 
 nextBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    if (currentStep < 3) {
+    if (currentStep < 4) {
       currentStep++;
       updateSteps();
     }
@@ -49,90 +53,90 @@ prevBtns.forEach(btn => {
   });
 });
 
-// 1단계: 키워드 선택 (최대 3개)
-const keywordChips = document.querySelectorAll('.keyword-chip');
-const keywordsInput = document.getElementById('selected-keywords-input');
-let selectedKeywords = [];
+// 1단계: LinkedIn Skills 선택 (정확히 5개)
+const skillChips = document.querySelectorAll('.keyword-chip');
+const skillsInput = document.getElementById('selected-skills-input');
+let selectedSkills = [];
 
-keywordChips.forEach(chip => {
+skillChips.forEach(chip => {
   chip.addEventListener('click', () => {
     const value = chip.dataset.value;
     
-    if (selectedKeywords.includes(value)) {
-      selectedKeywords = selectedKeywords.filter(k => k !== value);
+    if (selectedSkills.includes(value)) {
+      selectedSkills = selectedSkills.filter(s => s !== value);
       chip.classList.remove('selected');
-    } else if (selectedKeywords.length < 3) {
-      selectedKeywords.push(value);
+    } else if (selectedSkills.length < 5) {
+      selectedSkills.push(value);
       chip.classList.add('selected');
     }
     
-    keywordsInput.value = selectedKeywords.join(',');
+    skillsInput.value = selectedSkills.join(',');
     const step1NextBtn = document.querySelector('#step-1 .next-btn');
-    step1NextBtn.disabled = selectedKeywords.length !== 3;
+    step1NextBtn.disabled = selectedSkills.length !== 5;
+    step1NextBtn.textContent = `다음 단계로 (${selectedSkills.length}/5)`;
   });
 });
 
-// 폼 제출
+// 폼 제출 (OpenAI API용 JSON 구조)
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(form);
   
+  const linkedInData = {
+    request_type: "linkedin_job_analysis",
+    context: "Match user with LinkedIn job postings based on skills and industry",
+    user_profile: {
+      linkedin_skills: selectedSkills,
+      target_industry: formData.get('industry'),
+      key_achievement: formData.get('performance'),
+      work_preference: formData.get('work_style')
+    },
+    ai_instructions: "사용자의 성과 문장을 바탕으로 직무 레벨(Junior, Mid, Senior)을 판단하고, 링크드인 기술 섹션과 산업군을 고려하여 가장 적합한 공고 유형 5개를 추천하라."
+  };
+
+  console.log("OpenAI API로 전달될 데이터 구조:", linkedInData);
+  
   // 결과 표시 시뮬레이션
-  showSimulatedResults(selectedKeywords);
+  showLinkedInResults(selectedSkills, formData.get('industry'));
 });
 
-// 추천 직업 데이터 세트 (시뮬레이션용)
-const extendedJobDb = [
-  { title: "데이터 분석 전문가", score: 98, tasks: "비즈니스 데이터를 수집하고 통계적 기법을 통해 인사이트를 도출합니다.", competencies: ["분석적", "논리적", "꼼꼼함"], reqs: ["SQL/Python 숙련", "통계학 지식"] },
-  { title: "IT 서비스 기획자", score: 92, tasks: "사용자 요구사항을 정의하고 서비스 모델을 설계하여 개발 가이드라인을 제시합니다.", competencies: ["창의적", "논리적", "적응력"], reqs: ["스토리보드 작성", "UX 이론 이해"] },
-  { title: "UI/UX 디자이너", score: 85, tasks: "사용자 중심의 인터페이스를 설계하고 시각적 요소를 구현하여 사용자 경험을 최적화합니다.", competencies: ["창의적", "공감능력", "도전적"], reqs: ["Figma 숙련", "디자인 시스템 이해"] },
-  { title: "인사 전략 컨설턴트", score: 78, tasks: "조직의 목표에 부합하는 인재 관리 전략을 수립하고 인사 시스템을 개선합니다.", competencies: ["사교적", "리더십", "분석적"], reqs: ["노동법 지식", "커뮤니케이션 기술"] },
-  { title: "기술 지원 엔지니어", score: 72, tasks: "시스템 구축 시 발생하는 기술적 문제를 해결하고 고객사 기술 교육을 담당합니다.", competencies: ["논리적", "책임감", "적응력"], reqs: ["네트워크 기본 지식", "문제해결 능력"] }
-];
-
-function showSimulatedResults(userKeywords) {
+function showLinkedInResults(skills, industry) {
   const resultContainer = document.getElementById('result-container');
   const formContainer = document.getElementById('step-form-container');
   const resultsDiv = document.getElementById('job-results');
   
   formContainer.style.display = 'none';
   resultContainer.style.display = 'block';
-  
-  // 점수 순으로 정렬 (상위 5개)
-  const sortedJobs = extendedJobDb.sort((a, b) => b.score - a.score).slice(0, 5);
 
-  resultsDiv.innerHTML = sortedJobs.map((job, index) => {
-    // 하이라이트 로직: 사용자가 선택한 키워드가 직업의 핵심 역량에 포함되는지 확인
-    const highlightedCompetencies = job.competencies.map(comp => {
-      const isMatched = userKeywords.includes(comp);
-      return `<span class="comp-tag ${isMatched ? 'matched' : ''}">${isMatched ? '✨ ' : ''}${comp}</span>`;
-    }).join('');
+  // 시뮬레이션 데이터
+  const mockJobs = [
+    { title: `Senior ${skills[0]} Specialist`, score: 95, industry: industry, tasks: "대규모 시스템 설계 및 기술 스택 최적화 리딩", match: [skills[0], skills[1], skills[2]] },
+    { title: `${industry} Project Manager`, score: 88, industry: industry, tasks: "산업군 특화 솔루션 기획 및 스테이크홀더 관리", match: [skills[2], skills[4]] },
+    { title: `Strategic ${skills[3]} Consultant`, score: 82, industry: industry, tasks: "데이터 기반 비즈니스 전략 수립 및 임원진 보고", match: [skills[3], skills[4]] },
+    { title: `Global ${skills[1]} Lead`, score: 75, industry: industry, tasks: "글로벌 협업 프로젝트 총괄 및 기술 표준 수립", match: [skills[1], skills[2]] },
+    { title: `Innovation Analyst`, score: 70, industry: industry, tasks: "신규 시장 트렌드 분석 및 혁신 과제 발굴", match: [skills[3], skills[0]] }
+  ];
 
-    return `
-      <div class="job-card rank-${index + 1}">
-        <div class="job-card-header">
-          <div class="rank-badge">${index + 1}위</div>
-          <div class="job-title-row">
-            <div class="job-title">${job.title}</div>
-            <div class="match-percentage">${job.score}% 일치</div>
-          </div>
-          <div class="gauge-container">
-            <div class="gauge-fill" style="width: ${job.score}%"></div>
-          </div>
+  resultsDiv.innerHTML = mockJobs.map((job, index) => `
+    <div class="job-card rank-${index + 1}">
+      <div class="job-card-header">
+        <div class="rank-badge">${index + 1}위</div>
+        <div class="job-title-row">
+          <div class="job-title">${job.title}</div>
+          <div class="match-percentage">${job.score}%</div>
         </div>
-        <div class="job-card-body">
-          <div class="job-section-title">핵심 역량 매칭</div>
-          <div class="competency-list">
-            ${highlightedCompetencies}
-          </div>
-          <div class="job-section-title" style="margin-top: 1.2rem;">주요 업무</div>
-          <p class="job-task">${job.tasks}</p>
-          <div class="job-section-title">추가 필요 역량</div>
-          <ul class="job-requirements">
-            ${job.reqs.map(r => `<li>${r}</li>`).join('')}
-          </ul>
+        <div class="gauge-container">
+          <div class="gauge-fill" style="width: ${job.score}%"></div>
         </div>
       </div>
-    `;
-  }).join('');
+      <div class="job-card-body">
+        <div class="job-section-title">LinkedIn 기술 매칭</div>
+        <div class="competency-list">
+          ${job.match.map(s => `<span class="comp-tag matched">✨ ${s}</span>`).join('')}
+        </div>
+        <p class="job-task" style="margin-top:1rem;"><strong>주요 업무:</strong> ${job.tasks}</p>
+        <div class="industry-tag">📍 ${job.industry}</div>
+      </div>
+    </div>
+  `).join('');
 }

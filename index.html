@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>직업 매칭 정보 입력</title>
+  <title>링크드인 기반 직무 매칭</title>
   <link href='style.css' rel='stylesheet'>
 </head>
 <body>
@@ -18,38 +18,48 @@
       <div class="step" data-step="2">2</div>
       <div class="step-line"></div>
       <div class="step" data-step="3">3</div>
+      <div class="step-line"></div>
+      <div class="step" data-step="4">4</div>
     </div>
 
     <form id="multi-step-form">
-      <!-- Step 1: Keywords -->
+      <!-- Step 1: LinkedIn Skills -->
       <div class="form-step active" id="step-1">
-        <h2>1단계: 강점 키워드 선택</h2>
-        <p class="step-desc">본인을 가장 잘 나타내는 강점 3개를 선택해주세요.</p>
-        <div class="keyword-grid" id="keyword-selection">
-          <div class="keyword-chip" data-value="논리적">논리적</div>
-          <div class="keyword-chip" data-value="창의적">창의적</div>
-          <div class="keyword-chip" data-value="사교적">사교적</div>
-          <div class="keyword-chip" data-value="꼼꼼함">꼼꼼함</div>
-          <div class="keyword-chip" data-value="분석적">분석적</div>
-          <div class="keyword-chip" data-value="리더십">리더십</div>
-          <div class="keyword-chip" data-value="책임감">책임감</div>
-          <div class="keyword-chip" data-value="적응력">적응력</div>
-          <div class="keyword-chip" data-value="추진력">추진력</div>
-          <div class="keyword-chip" data-value="공감능력">공감능력</div>
-          <div class="keyword-chip" data-value="성실함">성실함</div>
-          <div class="keyword-chip" data-value="도전적">도전적</div>
+        <h2>1단계: 핵심 역량 (LinkedIn Skills)</h2>
+        <p class="step-desc">링크드인 프로필에 등록할 수 있는 핵심 기술 키워드 5개를 선택해주세요.</p>
+        <div class="keyword-grid" id="skill-selection">
+          <div class="keyword-chip" data-value="JavaScript">JavaScript</div>
+          <div class="keyword-chip" data-value="Python">Python</div>
+          <div class="keyword-chip" data-value="Project Management">Project Management</div>
+          <div class="keyword-chip" data-value="Data Analysis">Data Analysis</div>
+          <div class="keyword-chip" data-value="UI/UX Design">UI/UX Design</div>
+          <div class="keyword-chip" data-value="Digital Marketing">Digital Marketing</div>
+          <div class="keyword-chip" data-value="Strategic Planning">Strategic Planning</div>
+          <div class="keyword-chip" data-value="SQL">SQL</div>
+          <div class="keyword-chip" data-value="Cloud Computing">Cloud Computing</div>
+          <div class="keyword-chip" data-value="Problem Solving">Problem Solving</div>
+          <div class="keyword-chip" data-value="Communication">Communication</div>
+          <div class="keyword-chip" data-value="Agile">Agile</div>
         </div>
-        <input type="hidden" id="selected-keywords-input" name="keywords" required>
-        <button type="button" class="submit-btn next-btn" disabled>다음 단계로</button>
+        <input type="hidden" id="selected-skills-input" name="skills" required>
+        <button type="button" class="submit-btn next-btn" disabled>다음 단계로 (0/5)</button>
       </div>
 
-      <!-- Step 2: Experience -->
+      <!-- Step 2: Industry Preference -->
       <div class="form-step" id="step-2">
-        <h2>2단계: 경험 기술하기</h2>
-        <p class="step-desc">선택한 강점을 발휘했던 짧은 경험을 한 줄로 적어주세요.</p>
+        <h2>2단계: 관심 산업군 선택</h2>
+        <p class="step-desc">어떤 산업군의 구인 광고를 주로 보고 싶으신가요?</p>
         <div class="form-group">
-          <label for="experience">강점 발휘 경험</label>
-          <textarea id="experience" name="경험" placeholder="예: 팀 프로젝트 시 논리적인 분석을 통해 문제를 해결한 경험이 있습니다."></textarea>
+          <select id="industry" name="industry" required>
+            <option value="" disabled selected>산업군을 선택하세요</option>
+            <option value="IT/Software">IT / 소프트웨어 / 인터넷</option>
+            <option value="Finance/Banking">금융 / 은행 / 보험</option>
+            <option value="Healthcare/Biotech">의료 / 바이오 / 헬스케어</option>
+            <option value="Education/E-learning">교육 / 에듀테크</option>
+            <option value="E-commerce/Retail">커머스 / 리테일</option>
+            <option value="Media/Entertainment">미디어 / 엔터테인먼트 / 광고</option>
+            <option value="Manufacturing/Energy">제조 / 에너지 / 화학</option>
+          </select>
         </div>
         <div class="btn-group">
           <button type="button" class="submit-btn prev-btn secondary">이전</button>
@@ -57,25 +67,46 @@
         </div>
       </div>
 
-      <!-- Step 3: Work Style -->
+      <!-- Step 3: Achievement & Level -->
       <div class="form-step" id="step-3">
-        <h2>3단계: 선호 근무 형태</h2>
-        <p class="step-desc">본인이 가장 선호하는 업무 환경을 선택해주세요.</p>
+        <h2>3단계: 주요 성과 (Job Level 판단)</h2>
+        <p class="step-desc">가장 성과가 좋았던 프로젝트나 업무를 한 문장으로 적어주세요.</p>
+        <div class="form-group">
+          <textarea id="performance" name="performance" placeholder="예: 신규 고객 유입을 위한 마케팅 자동화 시스템을 구축하여 매출을 30% 증대시켰습니다."></textarea>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="submit-btn prev-btn secondary">이전</button>
+          <button type="button" class="submit-btn next-btn">다음 단계로</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Work Arrangement -->
+      <div class="form-step" id="step-4">
+        <h2>4단계: 희망 업무 형태</h2>
+        <p class="step-desc">가장 선호하는 근무 방식을 선택해주세요.</p>
         <div class="work-style-options">
           <label class="work-option">
-            <input type="radio" name="work_style" value="원격 근무" checked>
+            <input type="radio" name="work_style" value="Remote" checked>
             <div class="option-card">
               <span class="icon">🏠</span>
-              <span class="label">원격 근무</span>
-              <span class="desc">장소에 구애받지 않는 자유로운 환경</span>
+              <span class="label">Remote</span>
+              <span class="desc">100% 원격 근무</span>
             </div>
           </label>
           <label class="work-option">
-            <input type="radio" name="work_style" value="사무실 출근">
+            <input type="radio" name="work_style" value="Flexible">
+            <div class="option-card">
+              <span class="icon">🔄</span>
+              <span class="label">Flexible</span>
+              <span class="desc">하이브리드 / 선택적 출근</span>
+            </div>
+          </label>
+          <label class="work-option">
+            <input type="radio" name="work_style" value="Office">
             <div class="option-card">
               <span class="icon">🏢</span>
-              <span class="label">사무실 출근</span>
-              <span class="desc">동료들과 대면하며 협업하는 환경</span>
+              <span class="label">Office</span>
+              <span class="desc">사무실 상주 근무</span>
             </div>
           </label>
         </div>
@@ -88,7 +119,7 @@
   </div>
 
   <div id="result-container" class="form-container" style="display: none;">
-    <h2>나에게 맞는 추천 직업</h2>
+    <h2>링크드인 기반 추천 직무</h2>
     <div id="job-results"></div>
     <button onclick="location.reload()" class="submit-btn retry-btn">다시 시도하기</button>
   </div>
