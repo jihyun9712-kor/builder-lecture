@@ -107,36 +107,79 @@ h2 {
   padding-top: 0.5rem;
 }
 
-.job-item {
-  padding: 1.5rem;
-  border-bottom: 1px solid #eee;
+.job-card {
+  background: var(--container-bg);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
   text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
 }
 
-.job-item:last-child {
-  border-bottom: none;
+.job-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.job-card-header {
+  padding: 1.2rem 1.5rem;
+  background: rgba(74, 144, 226, 0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .job-title {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--accent-color);
-  margin-bottom: 0.5rem;
-}
-
-.job-task {
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
+  margin-bottom: 0.3rem;
 }
 
 .job-keywords {
   font-size: 0.85rem;
   color: #888;
+  font-weight: 500;
 }
 
-body.dark-mode .job-item {
-  border-bottom: 1px solid #444;
+.job-card-body {
+  padding: 1.5rem;
+}
+
+.job-section-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.job-task {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.job-requirements {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.job-requirements li {
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+}
+
+body.dark-mode .job-card {
+  border-color: rgba(255,255,255,0.1);
+  background: #333;
+}
+
+body.dark-mode .job-card-header {
+  background: rgba(255,255,255,0.03);
 }
   padding: 0.8rem 2rem;
   font-size: 1.1rem;
