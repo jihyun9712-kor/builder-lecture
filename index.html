@@ -11,38 +11,79 @@
     <button id="theme-btn">🌙 다크 모드</button>
   </div>
 
-  <div class="form-container">
-    <h2>직업 매칭 정보 입력</h2>
-    <form action="https://formspree.io/f/mreawnzj" method="POST">
-      <div class="form-group">
-        <label for="name">이름</label>
-        <input type="text" id="name" name="이름" required placeholder="이름을 입력하세요">
+  <div class="form-container" id="step-form-container">
+    <div class="step-indicator">
+      <div class="step active" data-step="1">1</div>
+      <div class="step-line"></div>
+      <div class="step" data-step="2">2</div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3">3</div>
+    </div>
+
+    <form id="multi-step-form">
+      <!-- Step 1: Keywords -->
+      <div class="form-step active" id="step-1">
+        <h2>1단계: 강점 키워드 선택</h2>
+        <p class="step-desc">본인을 가장 잘 나타내는 강점 3개를 선택해주세요.</p>
+        <div class="keyword-grid" id="keyword-selection">
+          <div class="keyword-chip" data-value="논리적">논리적</div>
+          <div class="keyword-chip" data-value="창의적">창의적</div>
+          <div class="keyword-chip" data-value="사교적">사교적</div>
+          <div class="keyword-chip" data-value="꼼꼼함">꼼꼼함</div>
+          <div class="keyword-chip" data-value="분석적">분석적</div>
+          <div class="keyword-chip" data-value="리더십">리더십</div>
+          <div class="keyword-chip" data-value="책임감">책임감</div>
+          <div class="keyword-chip" data-value="적응력">적응력</div>
+          <div class="keyword-chip" data-value="추진력">추진력</div>
+          <div class="keyword-chip" data-value="공감능력">공감능력</div>
+          <div class="keyword-chip" data-value="성실함">성실함</div>
+          <div class="keyword-chip" data-value="도전적">도전적</div>
+        </div>
+        <input type="hidden" id="selected-keywords-input" name="keywords" required>
+        <button type="button" class="submit-btn next-btn" disabled>다음 단계로</button>
       </div>
-      <div class="form-group">
-        <label for="job-category">희망하는 대분류 직업군</label>
-        <select id="job-category" name="희망_직업군" required>
-          <option value="" disabled selected>직업군을 선택하세요</option>
-          <option value="경영·사무·금융·보험">경영·사무·금융·보험</option>
-          <option value="연구·공학·기술">연구·공학·기술</option>
-          <option value="교육·법률·사회복지">교육·법률·사회복지</option>
-          <option value="보건·의료">보건·의료</option>
-          <option value="예술·디자인·방송·스포츠">예술·디자인·방송·스포츠</option>
-          <option value="미용·여행·숙박·음식·경비">미용·여행·숙박·음식·경비</option>
-          <option value="영업·판매·운송">영업·판매·운송</option>
-          <option value="건설·채굴">건설·채굴</option>
-          <option value="설치·정비·생산">설치·정비·생산</option>
-          <option value="농림어업">농림어업</option>
-        </select>
+
+      <!-- Step 2: Experience -->
+      <div class="form-step" id="step-2">
+        <h2>2단계: 경험 기술하기</h2>
+        <p class="step-desc">선택한 강점을 발휘했던 짧은 경험을 한 줄로 적어주세요.</p>
+        <div class="form-group">
+          <label for="experience">강점 발휘 경험</label>
+          <textarea id="experience" name="경험" placeholder="예: 팀 프로젝트 시 논리적인 분석을 통해 문제를 해결한 경험이 있습니다."></textarea>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="submit-btn prev-btn secondary">이전</button>
+          <button type="button" class="submit-btn next-btn">다음 단계로</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="strengths">자신의 핵심 강점</label>
-        <textarea id="strengths" name="핵심_강점" placeholder="본인만의 강점이나 전문성을 자유롭게 적어주세요"></textarea>
+
+      <!-- Step 3: Work Style -->
+      <div class="form-step" id="step-3">
+        <h2>3단계: 선호 근무 형태</h2>
+        <p class="step-desc">본인이 가장 선호하는 업무 환경을 선택해주세요.</p>
+        <div class="work-style-options">
+          <label class="work-option">
+            <input type="radio" name="work_style" value="원격 근무" checked>
+            <div class="option-card">
+              <span class="icon">🏠</span>
+              <span class="label">원격 근무</span>
+              <span class="desc">장소에 구애받지 않는 자유로운 환경</span>
+            </div>
+          </label>
+          <label class="work-option">
+            <input type="radio" name="work_style" value="사무실 출근">
+            <div class="option-card">
+              <span class="icon">🏢</span>
+              <span class="label">사무실 출근</span>
+              <span class="desc">동료들과 대면하며 협업하는 환경</span>
+            </div>
+          </label>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="submit-btn prev-btn secondary">이전</button>
+          <button type="submit" class="submit-btn">나에게 맞는 직업 찾기</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="message">추가 문의사항</label>
-        <textarea id="message" name="메시지" placeholder="원하는 구체적인 직무나 궁금한 점을 적어주세요"></textarea>
-      </div>
-      <button type="submit" class="submit-btn">나에게 맞는 직업 찾기</button>
     </form>
   </div>
 
