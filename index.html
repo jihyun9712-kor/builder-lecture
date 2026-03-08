@@ -26,7 +26,7 @@
       <!-- Step 1: LinkedIn Skills -->
       <div class="form-step active" id="step-1">
         <h2>1단계: 핵심 역량 (LinkedIn Skills)</h2>
-        <p class="step-desc">링크드인 프로필에 등록할 수 있는 핵심 기술 키워드 5개를 선택해주세요.</p>
+        <p class="step-desc">기존 키워드를 선택하거나, 직접 입력 후 Enter를 눌러 추가해주세요. (최소 3개)</p>
         <div class="keyword-grid" id="skill-selection">
           <div class="keyword-chip" data-value="JavaScript">JavaScript</div>
           <div class="keyword-chip" data-value="Python">Python</div>
@@ -41,8 +41,13 @@
           <div class="keyword-chip" data-value="Communication">Communication</div>
           <div class="keyword-chip" data-value="Agile">Agile</div>
         </div>
+        
+        <div class="custom-input-wrapper">
+          <input type="text" id="custom-skill-input" placeholder="직접 입력 (예: 데이터베이스, 협업능력 등) 후 Enter">
+        </div>
+
         <input type="hidden" id="selected-skills-input" name="skills" required>
-        <button type="button" class="submit-btn next-btn" disabled>다음 단계로 (0/5)</button>
+        <button type="button" class="submit-btn next-btn" disabled>다음 단계로 (0개 선택됨)</button>
       </div>
 
       <!-- Step 2: Industry Preference -->

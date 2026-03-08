@@ -31,7 +31,6 @@ function updateSteps() {
       ind.classList.add('active');
     }
   });
-  
   document.getElementById(`step-${currentStep}`).classList.add('active');
 }
 
@@ -53,50 +52,99 @@ prevBtns.forEach(btn => {
   });
 });
 
-// 1단계: LinkedIn Skills 선택 (정확히 5개)
-const skillChips = document.querySelectorAll('.keyword-chip');
-const skillsInput = document.getElementById('selected-skills-input');
+// 1단계: Skills 관리
+const skillContainer = document.getElementById('skill-selection');
+const customSkillInput = document.getElementById('custom-skill-input');
+const skillsInputHidden = document.getElementById('selected-skills-input');
+const step1NextBtn = document.querySelector('#step-1 .next-btn');
 let selectedSkills = [];
 
-skillChips.forEach(chip => {
-  chip.addEventListener('click', () => {
-    const value = chip.dataset.value;
-    
-    if (selectedSkills.includes(value)) {
-      selectedSkills = selectedSkills.filter(s => s !== value);
-      chip.classList.remove('selected');
-    } else if (selectedSkills.length < 5) {
-      selectedSkills.push(value);
-      chip.classList.add('selected');
-    }
-    
-    skillsInput.value = selectedSkills.join(',');
-    const step1NextBtn = document.querySelector('#step-1 .next-btn');
-    step1NextBtn.disabled = selectedSkills.length !== 5;
-    step1NextBtn.textContent = `다음 단계로 (${selectedSkills.length}/5)`;
-  });
+// 버튼 활성화 및 히든 인풋 업데이트
+function updateSkillValidation() {
+  skillsInputHidden.value = JSON.stringify(selectedSkills);
+  step1NextBtn.disabled = selectedSkills.length < 3;
+  step1NextBtn.textContent = `다음 단계로 (${selectedSkills.length}개 선택됨)`;
+}
+
+// 칩 클릭 이벤트 (기존 및 신규 칩 공용)
+function handleChipClick(chip) {
+  const value = chip.dataset.value;
+  if (selectedSkills.includes(value)) {
+    selectedSkills = selectedSkills.filter(s => s !== value);
+    chip.classList.remove('selected');
+    // 커스텀 칩인 경우 삭제 버튼이 있을 수 있음
+  } else {
+    selectedSkills.push(value);
+    chip.classList.add('selected');
+  }
+  updateSkillValidation();
+}
+
+// 초기 칩들에 이벤트 등록
+document.querySelectorAll('.keyword-chip').forEach(chip => {
+  chip.addEventListener('click', () => handleChipClick(chip));
 });
 
-// 폼 제출 (OpenAI API용 JSON 구조)
+// 커스텀 칩 추가 함수
+function addCustomChip(value) {
+  if (!value || selectedSkills.includes(value)) return;
+
+  const newChip = document.createElement('div');
+  newChip.className = 'keyword-chip selected';
+  newChip.dataset.value = value;
+  newChip.innerHTML = `
+    ${value}
+    <span class="delete-chip" onclick="removeCustomChip(event, '${value}')">×</span>
+  `;
+  
+  newChip.addEventListener('click', (e) => {
+    if (e.target.classList.contains('delete-chip')) return;
+    handleChipClick(newChip);
+  });
+
+  skillContainer.appendChild(newChip);
+  selectedSkills.push(value);
+  updateSkillValidation();
+}
+
+// 커스텀 칩 삭제 함수
+window.removeCustomChip = function(event, value) {
+  event.stopPropagation(); // 칩 클릭 이벤트 전파 방지
+  selectedSkills = selectedSkills.filter(s => s !== value);
+  const chipElement = Array.from(document.querySelectorAll('.keyword-chip'))
+    .find(c => c.dataset.value === value);
+  if (chipElement) chipElement.remove();
+  updateSkillValidation();
+};
+
+// 엔터 키 입력 시 커스텀 칩 추가
+customSkillInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const value = customSkillInput.value.trim();
+    if (value) {
+      addCustomChip(value);
+      customSkillInput.value = '';
+    }
+  }
+});
+
+// 폼 제출
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(form);
   
   const linkedInData = {
     request_type: "linkedin_job_analysis",
-    context: "Match user with LinkedIn job postings based on skills and industry",
     user_profile: {
       linkedin_skills: selectedSkills,
       target_industry: formData.get('industry'),
       key_achievement: formData.get('performance'),
       work_preference: formData.get('work_style')
-    },
-    ai_instructions: "사용자의 성과 문장을 바탕으로 직무 레벨(Junior, Mid, Senior)을 판단하고, 링크드인 기술 섹션과 산업군을 고려하여 가장 적합한 공고 유형 5개를 추천하라."
+    }
   };
 
-  console.log("OpenAI API로 전달될 데이터 구조:", linkedInData);
-  
-  // 결과 표시 시뮬레이션
+  console.log("Firebase/API 전송 데이터:", linkedInData);
   showLinkedInResults(selectedSkills, formData.get('industry'));
 });
 
@@ -108,13 +156,12 @@ function showLinkedInResults(skills, industry) {
   formContainer.style.display = 'none';
   resultContainer.style.display = 'block';
 
-  // 시뮬레이션 데이터
   const mockJobs = [
-    { title: `Senior ${skills[0]} Specialist`, score: 95, industry: industry, tasks: "대규모 시스템 설계 및 기술 스택 최적화 리딩", match: [skills[0], skills[1], skills[2]] },
-    { title: `${industry} Project Manager`, score: 88, industry: industry, tasks: "산업군 특화 솔루션 기획 및 스테이크홀더 관리", match: [skills[2], skills[4]] },
-    { title: `Strategic ${skills[3]} Consultant`, score: 82, industry: industry, tasks: "데이터 기반 비즈니스 전략 수립 및 임원진 보고", match: [skills[3], skills[4]] },
-    { title: `Global ${skills[1]} Lead`, score: 75, industry: industry, tasks: "글로벌 협업 프로젝트 총괄 및 기술 표준 수립", match: [skills[1], skills[2]] },
-    { title: `Innovation Analyst`, score: 70, industry: industry, tasks: "신규 시장 트렌드 분석 및 혁신 과제 발굴", match: [skills[3], skills[0]] }
+    { title: `Senior ${skills[0]} Specialist`, score: 95, industry: industry, tasks: "전략적 시스템 설계 및 기술 최적화", match: [skills[0], skills[1]] },
+    { title: `${industry} Strategy Lead`, score: 88, industry: industry, tasks: "산업 트렌드 분석 및 비즈니스 혁신 리딩", match: [skills[2]] },
+    { title: `Global ${skills[1]} Expert`, score: 82, industry: industry, tasks: "글로벌 협업 및 기술 아키텍처 수립", match: [skills[1]] },
+    { title: `Digital Transformation Analyst`, score: 75, industry: industry, tasks: "데이터 기반의 조직 프로세스 혁신", match: [skills[0]] },
+    { title: `Product Innovation Manager`, score: 70, industry: industry, tasks: "신규 서비스 기획 및 사용자 경험 강화", match: [skills[2]] }
   ];
 
   resultsDiv.innerHTML = mockJobs.map((job, index) => `
@@ -130,7 +177,7 @@ function showLinkedInResults(skills, industry) {
         </div>
       </div>
       <div class="job-card-body">
-        <div class="job-section-title">LinkedIn 기술 매칭</div>
+        <div class="job-section-title">매칭 기술</div>
         <div class="competency-list">
           ${job.match.map(s => `<span class="comp-tag matched">✨ ${s}</span>`).join('')}
         </div>

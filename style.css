@@ -73,9 +73,61 @@ body {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Keyword Selection */
-.keyword-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
-.keyword-chip { padding: 0.8rem; background: var(--bg-color); border: 2px solid var(--border-color); border-radius: 12px; text-align: center; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.keyword-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
+.keyword-chip { 
+  position: relative;
+  padding: 0.8rem; 
+  background: var(--bg-color); 
+  border: 2px solid var(--border-color); 
+  border-radius: 12px; 
+  text-align: center; 
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: all 0.2s; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 .keyword-chip.selected { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+
+.delete-chip {
+  font-size: 1.1rem;
+  color: #ef4444;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.delete-chip:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.custom-input-wrapper {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#custom-skill-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+#custom-skill-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  border-style: solid;
+  background: var(--container-bg);
+}
 
 /* Work Style Options */
 .work-style-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 2rem; }
