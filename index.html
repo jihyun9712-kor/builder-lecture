@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +9,8 @@
 <body>
   <div class="top-controls">
     <select id="language-select" class="mini-select">
-      <option value="korean" selected>🇰🇷 KR</option>
-      <option value="english">🇺🇸 EN</option>
+      <option value="ko" selected>🇰🇷 KR</option>
+      <option value="en">🇺🇸 EN</option>
     </select>
     <button id="theme-btn" class="mini-btn">🌙 다크 모드</button>
   </div>
@@ -29,79 +29,89 @@
     <form id="multi-step-form">
       <!-- Step 1: LinkedIn Skills -->
       <div class="form-step active" id="step-1">
-        <h2>1단계: 핵심 역량 (Skills)</h2>
-        <p class="step-desc">기존 키워드를 선택하거나 직접 입력해주세요. (최소 3개)</p>
+        <h2 data-i18n="step1_title">1단계: 핵심 역량</h2>
+        <p class="step-desc" data-i18n="step1_desc">기존 키워드를 선택하거나 직접 입력해주세요. (최소 3개)</p>
         <div class="keyword-grid" id="skill-selection">
-          <div class="keyword-chip" data-value="JavaScript">JavaScript</div>
-          <div class="keyword-chip" data-value="Python">Python</div>
-          <div class="keyword-chip" data-value="Project Management">Project Management</div>
-          <div class="keyword-chip" data-value="Data Analysis">Data Analysis</div>
-          <div class="keyword-chip" data-value="UI/UX Design">UI/UX Design</div>
-          <div class="keyword-chip" data-value="Digital Marketing">Digital Marketing</div>
-          <div class="keyword-chip" data-value="SQL">SQL</div>
-          <div class="keyword-chip" data-value="Problem Solving">Problem Solving</div>
-          <div class="keyword-chip" data-value="Agile">Agile</div>
+          <div class="keyword-chip" data-value="JavaScript" data-i18n="skill_js">JavaScript</div>
+          <div class="keyword-chip" data-value="Python" data-i18n="skill_python">Python</div>
+          <div class="keyword-chip" data-value="Project Management" data-i18n="skill_pm">Project Management</div>
+          <div class="keyword-chip" data-value="Data Analysis" data-i18n="skill_da">Data Analysis</div>
+          <div class="keyword-chip" data-value="UI/UX Design" data-i18n="skill_uiux">UI/UX Design</div>
+          <div class="keyword-chip" data-value="Digital Marketing" data-i18n="skill_dm">Digital Marketing</div>
+          <div class="keyword-chip" data-value="SQL" data-i18n="skill_sql">SQL</div>
+          <div class="keyword-chip" data-value="Problem Solving" data-i18n="skill_ps">Problem Solving</div>
+          <div class="keyword-chip" data-value="Agile" data-i18n="skill_agile">Agile</div>
         </div>
         <div class="custom-input-wrapper">
-          <input type="text" id="custom-skill-input" placeholder="직접 입력 후 Enter">
+          <input type="text" id="custom-skill-input" data-i18n-placeholder="custom_placeholder" placeholder="직접 입력 후 Enter">
         </div>
         <input type="hidden" id="selected-skills-input" name="skills" required>
-        <button type="button" class="submit-btn next-btn" disabled>다음 단계로 (0개 선택됨)</button>
+        <button type="button" class="submit-btn next-btn" disabled data-i18n="next_step">다음 단계로 (0개 선택됨)</button>
       </div>
 
       <!-- Step 2: Industry -->
       <div class="form-step" id="step-2">
-        <h2>2단계: 관심 산업군</h2>
-        <p class="step-desc">분석을 희망하는 타겟 산업군을 선택하세요.</p>
+        <h2 data-i18n="step2_title">2단계: 관심 산업군</h2>
+        <p class="step-desc" data-i18n="step2_desc">분석을 희망하는 타겟 산업군을 선택하세요.</p>
         <div class="form-group">
           <select id="industry" name="industry" required>
-            <option value="" disabled selected>산업군 선택</option>
-            <option value="IT/Software">IT / 소프트웨어</option>
-            <option value="Finance">금융 / 핀테크</option>
-            <option value="Healthcare">의료 / 바이오</option>
-            <option value="E-commerce">커머스 / 유통</option>
-            <option value="Media/Ads">미디어 / 광고</option>
+            <option value="" disabled selected data-i18n="industry_placeholder">산업군 선택</option>
+            <option value="IT/Software" data-i18n="ind_it">IT / 소프트웨어</option>
+            <option value="Finance" data-i18n="ind_finance">금융 / 핀테크</option>
+            <option value="Healthcare" data-i18n="ind_healthcare">의료 / 바이오</option>
+            <option value="E-commerce" data-i18n="ind_ecommerce">커머스 / 유통</option>
+            <option value="Media/Ads" data-i18n="ind_media">미디어 / 광고</option>
           </select>
         </div>
         <div class="btn-group">
-          <button type="button" class="submit-btn prev-btn secondary">이전</button>
-          <button type="button" class="submit-btn next-btn">다음 단계로</button>
+          <button type="button" class="submit-btn prev-btn secondary" data-i18n="prev_step">이전</button>
+          <button type="button" class="submit-btn next-btn" data-i18n="next_step">다음 단계로</button>
         </div>
       </div>
 
       <!-- Step 3: Achievement -->
       <div class="form-step" id="step-3">
-        <h2>3단계: 주요 성과</h2>
-        <p class="step-desc">AI가 직무 레벨을 판단할 수 있도록 성과를 적어주세요.</p>
+        <h2 data-i18n="step3_title">3단계: 주요 성과</h2>
+        <p class="step-desc" data-i18n="step3_desc">AI가 직무 레벨을 판단할 수 있도록 성과를 적어주세요.</p>
         <div class="form-group">
-          <textarea id="performance" name="performance" placeholder="가장 성과가 좋았던 경험을 한 문장으로 적어주세요."></textarea>
+          <textarea id="performance" name="performance" data-i18n-placeholder="perf_placeholder" placeholder="가장 성과가 좋았던 경험을 한 문장으로 적어주세요."></textarea>
         </div>
         <div class="btn-group">
-          <button type="button" class="submit-btn prev-btn secondary">이전</button>
-          <button type="button" class="submit-btn next-btn">다음 단계로</button>
+          <button type="button" class="submit-btn prev-btn secondary" data-i18n="prev_step">이전</button>
+          <button type="button" class="submit-btn next-btn" data-i18n="next_step">다음 단계로</button>
         </div>
       </div>
 
       <!-- Step 4: Work Style -->
       <div class="form-step" id="step-4">
-        <h2>4단계: 업무 형태</h2>
+        <h2 data-i18n="step4_title">4단계: 업무 형태</h2>
+        <p class="step-desc" data-i18n="step4_desc">가장 선호하는 근무 방식을 선택해주세요.</p>
         <div class="work-style-options">
-          <label class="work-option"><input type="radio" name="work_style" value="Remote" checked><div class="option-card">Remote</div></label>
-          <label class="work-option"><input type="radio" name="work_style" value="Flexible"><div class="option-card">Flexible</div></label>
-          <label class="work-option"><input type="radio" name="work_style" value="Office"><div class="option-card">Office</div></label>
+          <label class="work-option">
+            <input type="radio" name="work_style" value="Remote" checked>
+            <div class="option-card" data-i18n="work_remote">Remote</div>
+          </label>
+          <label class="work-option">
+            <input type="radio" name="work_style" value="Flexible">
+            <div class="option-card" data-i18n="work_flexible">Flexible</div>
+          </label>
+          <label class="work-option">
+            <input type="radio" name="work_style" value="Office">
+            <div class="option-card" data-i18n="work_office">Office</div>
+          </label>
         </div>
         <div class="btn-group">
-          <button type="button" class="submit-btn prev-btn secondary">이전</button>
-          <button type="submit" class="submit-btn">분석 시작하기</button>
+          <button type="button" class="submit-btn prev-btn secondary" data-i18n="prev_step">이전</button>
+          <button type="submit" class="submit-btn" data-i18n="find_jobs">분석 시작하기</button>
         </div>
       </div>
     </form>
   </div>
 
   <div id="result-container" class="form-container" style="display: none;">
-    <h2 id="result-title">분석 결과</h2>
+    <h2 id="result-title" data-i18n="result_title">분석 결과</h2>
     <div id="job-results"></div>
-    <button onclick="location.reload()" class="submit-btn retry-btn">다시 하기</button>
+    <button onclick="location.reload()" class="submit-btn retry-btn" data-i18n="retry">다시 하기</button>
   </div>
 
   <script defer type="text/javascript" src="main.js"></script>
