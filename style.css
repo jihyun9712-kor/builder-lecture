@@ -75,7 +75,9 @@ h2 {
 }
 
 .form-group input[type="text"],
-.form-group input[type="datetime-local"] {
+.form-group input[type="datetime-local"],
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 0.8rem;
   border: 1px solid #ccc;
@@ -83,6 +85,20 @@ h2 {
   background: var(--bg-color);
   color: var(--text-color);
   box-sizing: border-box;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.form-group textarea {
+  height: 120px;
+  resize: vertical;
 }
 
 .radio-group {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>운세 정보 입력</title>
+  <title>직업 매칭 정보 입력</title>
   <link href='style.css' rel='stylesheet'>
 </head>
 <body>
@@ -12,24 +12,37 @@
   </div>
 
   <div class="form-container">
-    <h2>운세 정보 입력</h2>
+    <h2>직업 매칭 정보 입력</h2>
     <form action="https://formspree.io/f/mreawnzj" method="POST">
       <div class="form-group">
         <label for="name">이름</label>
         <input type="text" id="name" name="이름" required placeholder="이름을 입력하세요">
       </div>
       <div class="form-group">
-        <label for="birth">생년월일시</label>
-        <input type="datetime-local" id="birth" name="생년월일시" required>
+        <label for="job-category">희망하는 대분류 직업군</label>
+        <select id="job-category" name="희망_직업군" required>
+          <option value="" disabled selected>직업군을 선택하세요</option>
+          <option value="경영·사무·금융·보험">경영·사무·금융·보험</option>
+          <option value="연구·공학·기술">연구·공학·기술</option>
+          <option value="교육·법률·사회복지">교육·법률·사회복지</option>
+          <option value="보건·의료">보건·의료</option>
+          <option value="예술·디자인·방송·스포츠">예술·디자인·방송·스포츠</option>
+          <option value="미용·여행·숙박·음식·경비">미용·여행·숙박·음식·경비</option>
+          <option value="영업·판매·운송">영업·판매·운송</option>
+          <option value="건설·채굴">건설·채굴</option>
+          <option value="설치·정비·생산">설치·정비·생산</option>
+          <option value="농림어업">농림어업</option>
+        </select>
       </div>
       <div class="form-group">
-        <label>성별</label>
-        <div class="radio-group">
-          <label><input type="radio" name="성별" value="남성" required> 남성</label>
-          <label><input type="radio" name="성별" value="여성"> 여성</label>
-        </div>
+        <label for="strengths">자신의 핵심 강점</label>
+        <textarea id="strengths" name="핵심_강점" placeholder="본인만의 강점이나 전문성을 자유롭게 적어주세요"></textarea>
       </div>
-      <button type="submit" class="submit-btn">정보 전송</button>
+      <div class="form-group">
+        <label for="message">추가 문의사항</label>
+        <textarea id="message" name="메시지" placeholder="원하는 구체적인 직무나 궁금한 점을 적어주세요"></textarea>
+      </div>
+      <button type="submit" class="submit-btn">나에게 맞는 직업 찾기</button>
     </form>
   </div>
 
@@ -41,6 +54,7 @@
     var disqus_config = function () {
       this.page.url = window.location.href;
       this.page.identifier = window.location.pathname;
+      this.page.developer = 1; // 로컬 테스트 및 개발 시 필요할 수 있음
     };
     (function() { 
     var d = document, s = d.createElement('script');
