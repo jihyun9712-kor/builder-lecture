@@ -7,8 +7,12 @@
   <link href='style.css' rel='stylesheet'>
 </head>
 <body>
-  <div class="theme-toggle">
-    <button id="theme-btn">🌙 다크 모드</button>
+  <div class="top-controls">
+    <select id="language-select" class="mini-select">
+      <option value="korean" selected>🇰🇷 KR</option>
+      <option value="english">🇺🇸 EN</option>
+    </select>
+    <button id="theme-btn" class="mini-btn">🌙 다크 모드</button>
   </div>
 
   <div class="form-container" id="step-form-container">
@@ -20,39 +24,12 @@
       <div class="step" data-step="3">3</div>
       <div class="step-line"></div>
       <div class="step" data-step="4">4</div>
-      <div class="step-line"></div>
-      <div class="step" data-step="5">5</div>
     </div>
 
     <form id="multi-step-form">
-      <!-- Step 1: Language Selection -->
+      <!-- Step 1: LinkedIn Skills -->
       <div class="form-step active" id="step-1">
-        <h2>1단계: 희망 언어 선택 (Language)</h2>
-        <p class="step-desc">결과를 보고 싶은 언어를 선택해주세요.</p>
-        <div class="work-style-options">
-          <label class="work-option">
-            <input type="radio" name="language" value="korean" checked>
-            <div class="option-card">
-              <span class="icon">🇰🇷</span>
-              <span class="label">Korean</span>
-              <span class="desc">한국어 (~임 체)</span>
-            </div>
-          </label>
-          <label class="work-option">
-            <input type="radio" name="language" value="english">
-            <div class="option-card">
-              <span class="icon">🇺🇸</span>
-              <span class="label">English</span>
-              <span class="desc">English Results</span>
-            </div>
-          </label>
-        </div>
-        <button type="button" class="submit-btn next-btn">다음 단계로</button>
-      </div>
-
-      <!-- Step 2: LinkedIn Skills -->
-      <div class="form-step" id="step-2">
-        <h2>2단계: 핵심 역량 (Skills)</h2>
+        <h2>1단계: 핵심 역량 (Skills)</h2>
         <p class="step-desc">기존 키워드를 선택하거나 직접 입력해주세요. (최소 3개)</p>
         <div class="keyword-grid" id="skill-selection">
           <div class="keyword-chip" data-value="JavaScript">JavaScript</div>
@@ -69,15 +46,13 @@
           <input type="text" id="custom-skill-input" placeholder="직접 입력 후 Enter">
         </div>
         <input type="hidden" id="selected-skills-input" name="skills" required>
-        <div class="btn-group">
-          <button type="button" class="submit-btn prev-btn secondary">이전</button>
-          <button type="button" class="submit-btn next-btn" disabled>다음 단계로 (0개)</button>
-        </div>
+        <button type="button" class="submit-btn next-btn" disabled>다음 단계로 (0개 선택됨)</button>
       </div>
 
-      <!-- Step 3: Industry -->
-      <div class="form-step" id="step-3">
-        <h2>3단계: 관심 산업군</h2>
+      <!-- Step 2: Industry -->
+      <div class="form-step" id="step-2">
+        <h2>2단계: 관심 산업군</h2>
+        <p class="step-desc">분석을 희망하는 타겟 산업군을 선택하세요.</p>
         <div class="form-group">
           <select id="industry" name="industry" required>
             <option value="" disabled selected>산업군 선택</option>
@@ -85,6 +60,7 @@
             <option value="Finance">금융 / 핀테크</option>
             <option value="Healthcare">의료 / 바이오</option>
             <option value="E-commerce">커머스 / 유통</option>
+            <option value="Media/Ads">미디어 / 광고</option>
           </select>
         </div>
         <div class="btn-group">
@@ -93,11 +69,12 @@
         </div>
       </div>
 
-      <!-- Step 4: Achievement -->
-      <div class="form-step" id="step-4">
-        <h2>4단계: 주요 성과</h2>
+      <!-- Step 3: Achievement -->
+      <div class="form-step" id="step-3">
+        <h2>3단계: 주요 성과</h2>
+        <p class="step-desc">AI가 직무 레벨을 판단할 수 있도록 성과를 적어주세요.</p>
         <div class="form-group">
-          <textarea id="performance" name="performance" placeholder="가장 성과가 좋았던 경험을 적어주세요."></textarea>
+          <textarea id="performance" name="performance" placeholder="가장 성과가 좋았던 경험을 한 문장으로 적어주세요."></textarea>
         </div>
         <div class="btn-group">
           <button type="button" class="submit-btn prev-btn secondary">이전</button>
@@ -105,9 +82,9 @@
         </div>
       </div>
 
-      <!-- Step 5: Work Style -->
-      <div class="form-step" id="step-5">
-        <h2>5단계: 업무 형태</h2>
+      <!-- Step 4: Work Style -->
+      <div class="form-step" id="step-4">
+        <h2>4단계: 업무 형태</h2>
         <div class="work-style-options">
           <label class="work-option"><input type="radio" name="work_style" value="Remote" checked><div class="option-card">Remote</div></label>
           <label class="work-option"><input type="radio" name="work_style" value="Flexible"><div class="option-card">Flexible</div></label>
@@ -122,7 +99,7 @@
   </div>
 
   <div id="result-container" class="form-container" style="display: none;">
-    <h2 id="result-title">추천 결과</h2>
+    <h2 id="result-title">분석 결과</h2>
     <div id="job-results"></div>
     <button onclick="location.reload()" class="submit-btn retry-btn">다시 하기</button>
   </div>
