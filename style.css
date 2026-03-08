@@ -107,16 +107,37 @@ h2 {
   padding-top: 0.5rem;
 }
 
-.radio-group label {
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  margin-bottom: 0;
+.job-item {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
 }
 
-.submit-btn {
+.job-item:last-child {
+  border-bottom: none;
+}
+
+.job-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.job-task {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.job-keywords {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+body.dark-mode .job-item {
+  border-bottom: 1px solid #444;
+}
   padding: 0.8rem 2rem;
   font-size: 1.1rem;
   background-color: var(--accent-color);

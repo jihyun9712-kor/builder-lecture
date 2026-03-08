@@ -46,24 +46,12 @@
     </form>
   </div>
 
-  <div class="comments-container">
-    <div id="disqus_thread"></div>
+  <div id="result-container" class="form-container" style="display: none;">
+    <h2>나에게 맞는 추천 직업</h2>
+    <div id="job-results"></div>
+    <button onclick="location.reload()" class="submit-btn" style="margin-top: 1rem; background-color: #666;">다시 시도하기</button>
   </div>
 
-  <script>
-    var disqus_config = function () {
-      this.page.url = window.location.href;
-      this.page.identifier = window.location.pathname;
-      this.page.developer = 1; // 로컬 테스트 및 개발 시 필요할 수 있음
-    };
-    (function() { 
-    var d = document, s = d.createElement('script');
-    s.src = 'https://productbeginner.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   <script defer type="text/javascript" src="main.js"></script>
 </body>
 </html>
