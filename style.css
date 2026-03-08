@@ -122,8 +122,11 @@ body.dark-mode .mini-btn {
 .job-title { font-size: 1.3rem; font-weight: 800; color: var(--text-color); margin-bottom: 5px; }
 .job-card-body { padding: 1.5rem; }
 .job-section-title { font-size: 0.85rem; font-weight: 700; color: var(--secondary-btn); margin-bottom: 0.8rem; text-transform: uppercase; }
-.job-task { line-height: 1.6; font-size: 0.95rem; margin-bottom: 1rem; }
-.competency-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.job-task { line-height: 1.6; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-color); }
+.job-task-list { margin-bottom: 1.5rem; }
+.job-task:last-child { margin-bottom: 0; }
+
+.competency-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.5rem; }
 .comp-tag { padding: 4px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-weight: 700; font-size: 0.8rem; }
 .gauge-container { width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden; margin-top: 10px; }
 .gauge-fill { height: 100%; background: var(--accent-color); }
