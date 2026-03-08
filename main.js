@@ -21,6 +21,7 @@ const translations = {
     skill_agile: "애자일",
     custom_placeholder: "직접 입력 후 Enter",
     next_step: "다음 단계로",
+    selected_count: "개 선택됨",
     prev_step: "이전",
     step2_title: "2단계: 관심 산업군",
     step2_desc: "분석을 희망하는 타겟 산업군을 선택하세요.",
@@ -40,8 +41,7 @@ const translations = {
     work_office: "오피스 출근 (Office)",
     find_jobs: "분석 시작하기",
     result_title: "글로벌 커리어 분석 결과",
-    retry: "다시 하기",
-    selected_count: "개 선택됨"
+    retry: "다시 하기"
   },
   en: {
     step1_title: "Step 1: Core Skills",
@@ -57,6 +57,7 @@ const translations = {
     skill_agile: "Agile",
     custom_placeholder: "Type and press Enter",
     next_step: "Next Step",
+    selected_count: " selected",
     prev_step: "Previous",
     step2_title: "Step 2: Target Industry",
     step2_desc: "Select the industry you want to analyze.",
@@ -76,8 +77,7 @@ const translations = {
     work_office: "Office",
     find_jobs: "Start Analysis",
     result_title: "Global Career Matching Results",
-    retry: "Try Again",
-    selected_count: "selected"
+    retry: "Try Again"
   }
 };
 
@@ -86,20 +86,24 @@ function updateUI() {
   const lang = currentLang;
   const t = translations[lang];
 
-  // data-i18n 속성을 가진 모든 요소 번역
+  // 1. 일반 텍스트 요소 번역
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key]) {
-      // 다음 단계로 버튼처럼 숫자가 포함된 경우는 별도 처리
+      // 1단계 다음 버튼의 특수한 동적 텍스트 처리
       if (key === 'next_step' && el.classList.contains('next-btn') && currentStep === 1) {
-        el.textContent = `${t[key]} (${selectedSkills.length}${t.selected_count})`;
+        if (lang === 'ko') {
+          el.textContent = `${t.next_step} (${selectedSkills.length}${t.selected_count})`;
+        } else {
+          el.textContent = `${t.next_step} (${selectedSkills.length}${t.selected_count})`;
+        }
       } else {
         el.textContent = t[key];
       }
     }
   });
 
-  // placeholder 번역
+  // 2. 입력창 플레이스홀더 번역
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
     if (t[key]) {
@@ -107,10 +111,23 @@ function updateUI() {
     }
   });
 
-  // 다크모드 버튼 텍스트 별도 처리
-  themeBtn.textContent = body.classList.contains('dark-mode') ? 
-    (lang === 'ko' ? '☀️ 라이트 모드' : '☀️ Light Mode') : 
-    (lang === 'ko' ? '🌙 다크 모드' : '🌙 Dark Mode');
+  // 3. 테마 버튼 텍스트 (별도 로직)
+  const isDark = body.classList.contains('dark-mode');
+  if (lang === 'ko') {
+    themeBtn.textContent = isDark ? '☀️ 라이트 모드' : '🌙 다크 모드';
+  } else {
+    themeBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  }
+}
+
+// 칩 선택 상태에 따른 버튼 갱신 함수
+function updateButtonState() {
+  skillsInputHidden.value = JSON.stringify(selectedSkills);
+  const nextBtn = document.querySelector('#step-1 .next-btn');
+  nextBtn.disabled = selectedSkills.length < 3;
+  
+  // 현재 언어 설정을 반영하여 버튼 텍스트 즉시 갱신
+  updateUI();
 }
 
 // 언어 선택 이벤트
@@ -126,13 +143,9 @@ themeBtn.addEventListener('click', () => {
   localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
 });
 
-// 초기화
-if (localStorage.getItem('theme') === 'dark') {
-  body.classList.add('dark-mode');
-}
-updateUI();
+// 폼 초기화 및 로직
+if (localStorage.getItem('theme') === 'dark') body.classList.add('dark-mode');
 
-// 4단계 폼 로직
 const steps = document.querySelectorAll('.form-step');
 const indicators = document.querySelectorAll('.step');
 const nextBtns = document.querySelectorAll('.next-btn');
@@ -146,24 +159,17 @@ function updateSteps() {
     if (parseInt(ind.dataset.step) <= currentStep) ind.classList.add('active');
   });
   document.getElementById(`step-${currentStep}`).classList.add('active');
-  updateUI(); // 버튼 텍스트 등 업데이트
+  updateUI();
 }
 
 nextBtns.forEach(btn => btn.addEventListener('click', () => { if (currentStep < 4) { currentStep++; updateSteps(); } }));
 prevBtns.forEach(btn => btn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateSteps(); } }));
 
-// Skills 관리
+// Skills 관리 로직
 const skillContainer = document.getElementById('skill-selection');
 const customSkillInput = document.getElementById('custom-skill-input');
 const skillsInputHidden = document.getElementById('selected-skills-input');
 let selectedSkills = [];
-
-function updateSkillValidation() {
-  skillsInputHidden.value = JSON.stringify(selectedSkills);
-  const nextBtn = document.querySelector('#step-1 .next-btn');
-  nextBtn.disabled = selectedSkills.length < 3;
-  updateUI(); // 선택 개수 텍스트 반영을 위해 UI 업데이트
-}
 
 function attachChipEvent(chip) {
   chip.addEventListener('click', (e) => {
@@ -176,7 +182,7 @@ function attachChipEvent(chip) {
       selectedSkills.push(val);
       chip.classList.add('selected');
     }
-    updateSkillValidation();
+    updateButtonState(); // 키워드 변경 시 호출
   });
 }
 
@@ -198,12 +204,12 @@ customSkillInput.addEventListener('keypress', (e) => {
         ev.stopPropagation();
         selectedSkills = selectedSkills.filter(s => s !== val);
         chip.remove();
-        updateSkillValidation();
+        updateButtonState(); // 삭제 시에도 호출
       };
       
       attachChipEvent(chip);
       selectedSkills.push(val);
-      updateSkillValidation();
+      updateButtonState();
     }
     customSkillInput.value = '';
   }
@@ -213,19 +219,6 @@ customSkillInput.addEventListener('keypress', (e) => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(form);
-  
-  const linkedInData = {
-    request_type: "linkedin_job_analysis",
-    current_lang: currentLang, // Firebase API 요청에 언어 정보 포함
-    user_profile: {
-      linkedin_skills: selectedSkills,
-      target_industry: formData.get('industry'),
-      key_achievement: formData.get('performance'),
-      work_preference: formData.get('work_style')
-    }
-  };
-
-  console.log("Firebase/API 전송 데이터:", linkedInData);
   showResults(currentLang, selectedSkills, formData.get('industry'));
 });
 
@@ -237,7 +230,6 @@ function showResults(lang, skills, industry) {
   formContainer.style.display = 'none';
   resultContainer.style.display = 'block';
 
-  // 시뮬레이션 데이터 (KOR / ENG 분기)
   const data = lang === 'ko' ? [
     {
       title: "시니어 풀스택 개발자 (Senior Full-stack Developer)",
@@ -283,3 +275,6 @@ function showResults(lang, skills, industry) {
     </div>
   `).join('');
 }
+
+// 초기 UI 업데이트
+updateUI();
