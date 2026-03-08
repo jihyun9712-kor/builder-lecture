@@ -2,10 +2,8 @@ const themeBtn = document.getElementById('theme-btn');
 const langSelect = document.getElementById('language-select');
 const body = document.body;
 
-// 전역 상태
 let currentLang = 'ko';
 
-// 번역 데이터 정의 (로딩/에러 메시지 추가)
 const translations = {
   ko: {
     step1_title: "1단계: 핵심 역량",
@@ -85,27 +83,21 @@ const translations = {
   }
 };
 
-// 언어 업데이트 함수
 function updateUI() {
   const lang = currentLang;
   const t = translations[lang];
-
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key]) {
       if (key === 'next_step' && el.classList.contains('next-btn') && currentStep === 1) {
         el.textContent = `${t.next_step} (${selectedSkills.length}${t.selected_count})`;
-      } else {
-        el.textContent = t[key];
-      }
+      } else { el.textContent = t[key]; }
     }
   });
-
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
     if (t[key]) el.placeholder = t[key];
   });
-
   const isDark = body.classList.contains('dark-mode');
   themeBtn.textContent = isDark ? (lang === 'ko' ? '☀️ 라이트 모드' : '☀️ Light Mode') : (lang === 'ko' ? '🌙 다크 모드' : '🌙 Dark Mode');
 }
@@ -130,7 +122,6 @@ themeBtn.addEventListener('click', () => {
 
 if (localStorage.getItem('theme') === 'dark') body.classList.add('dark-mode');
 
-// 폼 로직
 const form = document.getElementById('multi-step-form');
 const steps = document.querySelectorAll('.form-step');
 const indicators = document.querySelectorAll('.step');
@@ -152,7 +143,6 @@ function updateSteps() {
 nextBtns.forEach(btn => btn.addEventListener('click', () => { if (currentStep < 4) { currentStep++; updateSteps(); } }));
 prevBtns.forEach(btn => btn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateSteps(); } }));
 
-// Skills 관리
 const skillContainer = document.getElementById('skill-selection');
 const customSkillInput = document.getElementById('custom-skill-input');
 const skillsInputHidden = document.getElementById('selected-skills-input');
@@ -200,41 +190,27 @@ customSkillInput.addEventListener('keypress', (e) => {
   }
 });
 
-// [FIX] 결과 렌더링 엔진: 새로고침 방지 및 로딩/에러 처리 추가
 form.addEventListener('submit', async (e) => {
-  e.preventDefault(); // 1. 브라우저 기본 새로고침 동작 차단
-  
+  e.preventDefault();
   const submitBtn = form.querySelector('button[type="submit"]');
   const originalBtnText = submitBtn.textContent;
   const t = translations[currentLang];
 
   try {
-    // 2. 로딩 상태 시작
     submitBtn.disabled = true;
-    submitBtn.textContent = t.analyzing; // '분석 중...' 메시지 표시
-
-    // Firebase/OpenAI API 호출 시뮬레이션 (2초 대기)
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // 실제 데이터 준비
+    submitBtn.textContent = t.analyzing;
+    await new Promise(resolve => setTimeout(resolve, 1500));
     const formData = new FormData(form);
-    
-    // 3. 상태 전환 (폼 숨기고 결과창 표시)
     document.getElementById('step-form-container').style.display = 'none';
     const resultContainer = document.getElementById('result-container');
     resultContainer.style.display = 'block';
-
     showResults(currentLang, selectedSkills, formData.get('industry'));
-
   } catch (error) {
-    console.error("Analysis Error:", error);
-    // 4. 에러 핸들링
     const resultsDiv = document.getElementById('job-results');
     document.getElementById('step-form-container').style.display = 'none';
     document.getElementById('result-container').style.display = 'block';
-    resultsDiv.innerHTML = `<p style="color: #ef4444; text-align: center; padding: 2rem; font-weight: bold;">${t.error_msg}</p>`;
+    resultsDiv.innerHTML = `<p style="color: #ef4444; text-align: center; padding: 2rem;">${t.error_msg}</p>`;
   } finally {
-    // 로딩 상태 해제
     submitBtn.disabled = false;
     submitBtn.textContent = originalBtnText;
   }
@@ -242,31 +218,99 @@ form.addEventListener('submit', async (e) => {
 
 function showResults(lang, skills, industry) {
   const resultsDiv = document.getElementById('job-results');
-  const data = lang === 'ko' ? [
+  const isKor = lang === 'ko' || lang === 'KOR';
+  
+  const data = isKor ? [
     {
       title: "시니어 풀스택 개발자 (Senior Full-stack Developer)",
       desc: [
-        "자바스크립트와 파이썬 기반의 고도화된 웹 시스템 아키텍처를 설계하고 구축함.",
-        "프론트엔드와 백엔드 기술력을 바탕으로 서비스의 전체 안정성을 책임짐.",
-        "UI/UX 감각을 코드에 녹여내어 최상의 사용자 인터랙션을 제공함.",
-        "데이터 분석을 통해 성능 병목 지점을 찾고 시스템을 최적화함.",
-        "프로젝트 관리 역량을 활용하여 팀원들과의 원활한 협업을 주도함.",
-        "원격 근무 환경에서도 협업 툴을 활용해 최상의 생산성을 발휘함."
+        "고도화된 웹 아키텍처 설계와 구축을 주도하며 글로벌 기술 시장에서 핵심적인 몸값을 형성함.",
+        "사용자의 JS 및 Python 숙련도를 활용해 개발 공수를 획기적으로 단축하고 서비스 안정성에 기여함."
       ],
-      skills: ["React", "Python", "Cloud Architecture"]
+      skills: ["React", "Python", "System Design"],
+      reason: "보유하신 기술 스택이 현대적 개발 환경의 요구사항과 완벽히 일치함."
+    },
+    {
+      title: "테크니컬 프로덕트 매니저 (Technical Product Manager)",
+      desc: [
+        "기술과 비즈니스의 가교 역할을 수행하며 제품 로드맵 수립을 통해 높은 사업적 임팩트를 창출함.",
+        "사용자의 프로젝트 관리 및 데이터 분석 역량을 투입해 제품 출시 성공률을 극대화하고 수익 성장을 견인함."
+      ],
+      skills: ["Agile", "SQL", "Product Roadmap"],
+      reason: "관리 전문성과 기술적 이해도가 결합되어 리더 포지션에 최적화된 상태임."
+    },
+    {
+      title: "마케팅 테크놀로지 전문가 (MarTech Specialist)",
+      desc: [
+        "자동화 툴과 데이터 시스템을 통합하여 기업의 마케팅 효율을 고도화하는 고부가가치 직무임.",
+        "기존의 마케팅 자동화 성공 사례를 시스템화하여 마케팅 ROI를 직접적으로 증대시키고 기여함."
+      ],
+      skills: ["Marketing Automation", "Python API", "CRM"],
+      reason: "성과가 입증된 경험이 마케팅 기술 최적화 영역에서 독보적인 경쟁력을 가짐."
+    },
+    {
+      title: "데이터 기반 UX 엔지니어 (Data-driven UX Engineer)",
+      desc: [
+        "사용자 데이터를 분석해 인터페이스를 개선하고 서비스 전환율을 높이는 기술 디자인 전문가임.",
+        "UI/UX 디자인 감각과 데이터 분석 기술을 접목해 사용자 경험 기반의 실질적인 매출 증대를 실현함."
+      ],
+      skills: ["Figma", "Web Analytics", "Interaction Design"],
+      reason: "디자인과 데이터의 융합 역량이 고객 경험 고도화 트렌드와 일치함."
+    },
+    {
+      title: "그로스 솔루션 아키텍트 (Growth Solution Architect)",
+      desc: [
+        "기업의 성장 지표를 기술적으로 해결하며 비즈니스 확장을 위한 시스템 기반을 설계하는 전문가임.",
+        "사용자의 문제 해결 능력과 기술 스택을 성장 실험에 투입해 제품의 시장 점유율 확대를 주도함."
+      ],
+      skills: ["Growth Hacking", "A/B Testing", "Cloud Strategy"],
+      reason: "문제 해결 중심의 사고방식이 기업의 성장 동력 확보에 필수적인 자산임."
     }
   ] : [
     {
       title: "Senior Full-stack Developer",
       desc: [
-        "Design and build advanced web architectures using JS and Python.",
-        "Ensure overall service stability with full-stack expertise.",
-        "Deliver top-tier user interactions by integrating UI/UX design into code.",
-        "Identify and fix performance bottlenecks through data analysis.",
-        "Lead team collaboration and schedules with project management skills.",
-        "Maintain high productivity in remote environments using collaboration tools."
+        "Leading advanced web architecture design with high market value in the global tech industry.",
+        "Utilizing your JS and Python proficiency to reduce dev costs and ensure service stability."
       ],
-      skills: ["React", "Python", "Cloud Architecture"]
+      skills: ["React", "Python", "System Design"],
+      reason: "Your tech stack perfectly matches the requirements of modern development environments."
+    },
+    {
+      title: "Technical Product Manager",
+      desc: [
+        "Bridging tech and business to create high impact through strategic product roadmap establishment.",
+        "Applying your PM and data skills to maximize launch success rates and drive revenue growth."
+      ],
+      skills: ["Agile", "SQL", "Product Roadmap"],
+      reason: "The combination of management expertise and tech depth is optimized for leader roles."
+    },
+    {
+      title: "MarTech Specialist",
+      desc: [
+        "Integrating automation tools and data systems to enhance corporate marketing efficiency.",
+        "Systematizing your previous automation success to directly increase and contribute to marketing ROI."
+      ],
+      skills: ["Marketing Automation", "Python API", "CRM"],
+      reason: "Your proven track record provides a unique competitive edge in MarTech optimization."
+    },
+    {
+      title: "Data-driven UX Engineer",
+      desc: [
+        "A tech-design expert improving interfaces and conversion rates through user data analysis.",
+        "Merging UI/UX design sense with data skills to realize tangible revenue growth based on CX."
+      ],
+      skills: ["Figma", "Web Analytics", "Interaction Design"],
+      reason: "Convergent skills in design and data align with customer experience enhancement trends."
+    },
+    {
+      title: "Growth Solution Architect",
+      desc: [
+        "Designing system foundations for business expansion by solving growth metrics technically.",
+        "Deploying your problem-solving skills and tech stack into experiments to drive market share."
+      ],
+      skills: ["Growth Hacking", "A/B Testing", "Cloud Strategy"],
+      reason: "Your problem-solving mindset is an essential asset for securing corporate growth engines."
     }
   ];
 
@@ -274,19 +318,21 @@ function showResults(lang, skills, industry) {
     <div class="job-card">
       <div class="job-card-header">
         <div class="job-title">${job.title}</div>
-        <div class="gauge-container"><div class="gauge-fill" style="width: ${95 - i*10}%"></div></div>
+        <div class="gauge-container"><div class="gauge-fill" style="width: ${95 - i*5}%"></div></div>
       </div>
       <div class="job-card-body">
-        <div class="job-section-title">${lang === 'ko' ? '상세 업무 설명' : 'Job Description'}</div>
+        <div class="job-section-title">${isKor ? '핵심 업무 요약' : 'Core Job Summary'}</div>
         <div class="job-task-list">
           ${job.desc.map(line => `<p class="job-task">• ${line}</p>`).join('')}
         </div>
-        <div class="job-section-title">${lang === 'ko' ? '핵심 매칭 기술' : 'Key Matching Skills'}</div>
+        <div class="job-section-title" style="margin-top:1.5rem;">${isKor ? '필수 역량' : 'Core Required Skills'}</div>
         <div class="competency-list">${job.skills.map(s => `<span class="comp-tag">✨ ${s}</span>`).join('')}</div>
+        <p class="job-task" style="margin-top:1.5rem; color: var(--accent-color); font-weight: 700;">
+          <strong>${isKor ? '매칭 이유' : 'Match Reason'}:</strong> ${job.reason}
+        </p>
       </div>
     </div>
   `).join('');
 }
 
-// 초기 UI 업데이트
 updateUI();
