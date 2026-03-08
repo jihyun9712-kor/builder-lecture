@@ -263,8 +263,8 @@ function showIndustrySpecificResults(lang, skills, industry, performance) {
       <div class="job-card-body">
         <div class="job-section-title">${isKor ? '핵심 업무 분석' : 'Core Job Analysis'}</div>
         <div class="job-task-list">
-          <p class="job-task">1행: ${job.desc[0]}</p>
-          <p class="job-task">2행: ${job.desc[1]}</p>
+          <p class="job-task">• ${job.desc[0]}</p>
+          <p class="job-task">• ${job.desc[1]}</p>
         </div>
         <div class="job-section-title" style="margin-top:1.2rem;">${isKor ? '필수 역량' : 'Key Skills'}</div>
         <div class="competency-list">${job.skills.map(s => `<span class="comp-tag">✨ ${s}</span>`).join('')}</div>
