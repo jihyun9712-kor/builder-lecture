@@ -1,21 +1,25 @@
 :root {
-  --bg-color: #f0f2f5;
-  --container-bg: white;
-  --text-color: #333;
-  --accent-color: #4a90e2;
-  --button-hover: #357abd;
+  --bg-color: #f8fafc;
+  --container-bg: #ffffff;
+  --text-color: #1e293b;
+  --accent-color: #4f46e5;
+  --button-hover: #4338ca;
+  --secondary-btn: #64748b;
+  --secondary-hover: #475569;
 }
 
 body.dark-mode {
-  --bg-color: #1a1a1a;
-  --container-bg: #2d2d2d;
-  --text-color: #f0f2f5;
-  --accent-color: #64b5f6;
-  --button-hover: #42a5f5;
+  --bg-color: #0f172a;
+  --container-bg: #1e293b;
+  --text-color: #f1f5f9;
+  --accent-color: #818cf8;
+  --button-hover: #6366f1;
+  --secondary-btn: #475569;
+  --secondary-hover: #334155;
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,7 +29,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
-  padding: 100px 0 3rem;
+  padding: 80px 0 3rem;
 }
 
 .theme-toggle {
@@ -37,30 +41,40 @@ body {
 
 #theme-btn {
   background: var(--container-bg);
-  border: 1px solid var(--text-color);
+  border: 1px solid rgba(0,0,0,0.1);
   color: var(--text-color);
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: all 0.2s;
 }
 
-.form-container, .comments-container {
+#theme-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.form-container {
   width: 90%;
   max-width: 600px;
   background: var(--container-bg);
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s;
   margin-bottom: 2rem;
 }
 
 h2 {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 .form-group {
@@ -70,22 +84,24 @@ h2 {
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .form-group input[type="text"],
-.form-group input[type="datetime-local"],
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: var(--bg-color);
+  padding: 0.9rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: var(--container-bg);
   color: var(--text-color);
   box-sizing: border-box;
   font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s;
 }
 
 .form-group input:focus,
@@ -93,7 +109,7 @@ h2 {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
 }
 
 .form-group textarea {
@@ -101,31 +117,59 @@ h2 {
   resize: vertical;
 }
 
-.radio-group {
-  display: flex;
-  gap: 1.5rem;
-  padding-top: 0.5rem;
+.submit-btn {
+  padding: 1.1rem 2rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  letter-spacing: -0.01em;
+}
+
+.submit-btn:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(79, 70, 229, 0.25);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.retry-btn {
+  margin-top: 1.5rem;
+  background-color: var(--secondary-btn);
+}
+
+.retry-btn:hover {
+  background-color: var(--secondary-hover);
+  box-shadow: 0 8px 15px rgba(100, 116, 139, 0.2);
 }
 
 .job-card {
   background: var(--container-bg);
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 16px;
   margin-bottom: 1.5rem;
   overflow: hidden;
   text-align: left;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  transition: all 0.3s;
 }
 
 .job-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.08);
 }
 
 .job-card-header {
-  padding: 1.2rem 1.5rem;
-  background: rgba(74, 144, 226, 0.05);
+  padding: 1.5rem;
+  background: rgba(79, 70, 229, 0.04);
   border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
@@ -133,12 +177,12 @@ h2 {
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--accent-color);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .job-keywords {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--secondary-btn);
   font-weight: 500;
 }
 
@@ -147,13 +191,12 @@ h2 {
 }
 
 .job-section-title {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: var(--text-color);
-  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--secondary-btn);
+  margin-bottom: 0.6rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.8;
+  letter-spacing: 0.05em;
 }
 
 .job-task {
@@ -169,33 +212,14 @@ h2 {
 }
 
 .job-requirements li {
-  margin-bottom: 0.4rem;
-  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
 }
 
 body.dark-mode .job-card {
-  border-color: rgba(255,255,255,0.1);
-  background: #333;
+  border-color: rgba(255,255,255,0.05);
 }
 
 body.dark-mode .job-card-header {
-  background: rgba(255,255,255,0.03);
-}
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
-  width: 100%;
-}
-
-.submit-btn:hover {
-  background-color: var(--button-hover);
-}
-
-.submit-btn:active {
-  transform: translateY(2px);
+  background: rgba(255,255,255,0.02);
 }
