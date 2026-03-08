@@ -5,7 +5,7 @@ const body = document.body;
 // 전역 상태
 let currentLang = 'ko';
 
-// 번역 데이터 정의
+// 번역 데이터 정의 (로딩/에러 메시지 추가)
 const translations = {
   ko: {
     step1_title: "1단계: 핵심 역량",
@@ -40,6 +40,8 @@ const translations = {
     work_flexible: "유연 근무 (Flexible)",
     work_office: "오피스 출근 (Office)",
     find_jobs: "분석 시작하기",
+    analyzing: "분석 중...",
+    error_msg: "네트워크 오류가 발생했습니다. 다시 시도해주세요.",
     result_title: "글로벌 커리어 분석 결과",
     retry: "다시 하기"
   },
@@ -76,6 +78,8 @@ const translations = {
     work_flexible: "Flexible",
     work_office: "Office",
     find_jobs: "Start Analysis",
+    analyzing: "Analyzing...",
+    error_msg: "A network error occurred. Please try again.",
     result_title: "Global Career Matching Results",
     retry: "Try Again"
   }
@@ -86,66 +90,48 @@ function updateUI() {
   const lang = currentLang;
   const t = translations[lang];
 
-  // 1. 일반 텍스트 요소 번역
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key]) {
-      // 1단계 다음 버튼의 특수한 동적 텍스트 처리
       if (key === 'next_step' && el.classList.contains('next-btn') && currentStep === 1) {
-        if (lang === 'ko') {
-          el.textContent = `${t.next_step} (${selectedSkills.length}${t.selected_count})`;
-        } else {
-          el.textContent = `${t.next_step} (${selectedSkills.length}${t.selected_count})`;
-        }
+        el.textContent = `${t.next_step} (${selectedSkills.length}${t.selected_count})`;
       } else {
         el.textContent = t[key];
       }
     }
   });
 
-  // 2. 입력창 플레이스홀더 번역
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    if (t[key]) {
-      el.placeholder = t[key];
-    }
+    if (t[key]) el.placeholder = t[key];
   });
 
-  // 3. 테마 버튼 텍스트 (별도 로직)
   const isDark = body.classList.contains('dark-mode');
-  if (lang === 'ko') {
-    themeBtn.textContent = isDark ? '☀️ 라이트 모드' : '🌙 다크 모드';
-  } else {
-    themeBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
-  }
+  themeBtn.textContent = isDark ? (lang === 'ko' ? '☀️ 라이트 모드' : '☀️ Light Mode') : (lang === 'ko' ? '🌙 다크 모드' : '🌙 Dark Mode');
 }
 
-// 칩 선택 상태에 따른 버튼 갱신 함수
 function updateButtonState() {
   skillsInputHidden.value = JSON.stringify(selectedSkills);
   const nextBtn = document.querySelector('#step-1 .next-btn');
-  nextBtn.disabled = selectedSkills.length < 3;
-  
-  // 현재 언어 설정을 반영하여 버튼 텍스트 즉시 갱신
+  if (nextBtn) nextBtn.disabled = selectedSkills.length < 3;
   updateUI();
 }
 
-// 언어 선택 이벤트
 langSelect.addEventListener('change', (e) => {
   currentLang = e.target.value;
   updateUI();
 });
 
-// 테마 변경
 themeBtn.addEventListener('click', () => {
   body.classList.toggle('dark-mode');
   updateUI();
   localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
 });
 
-// 폼 초기화 및 로직
 if (localStorage.getItem('theme') === 'dark') body.classList.add('dark-mode');
 
+// 폼 로직
+const form = document.getElementById('multi-step-form');
 const steps = document.querySelectorAll('.form-step');
 const indicators = document.querySelectorAll('.step');
 const nextBtns = document.querySelectorAll('.next-btn');
@@ -158,14 +144,15 @@ function updateSteps() {
     ind.classList.remove('active');
     if (parseInt(ind.dataset.step) <= currentStep) ind.classList.add('active');
   });
-  document.getElementById(`step-${currentStep}`).classList.add('active');
+  const currentStepEl = document.getElementById(`step-${currentStep}`);
+  if (currentStepEl) currentStepEl.classList.add('active');
   updateUI();
 }
 
 nextBtns.forEach(btn => btn.addEventListener('click', () => { if (currentStep < 4) { currentStep++; updateSteps(); } }));
 prevBtns.forEach(btn => btn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateSteps(); } }));
 
-// Skills 관리 로직
+// Skills 관리
 const skillContainer = document.getElementById('skill-selection');
 const customSkillInput = document.getElementById('custom-skill-input');
 const skillsInputHidden = document.getElementById('selected-skills-input');
@@ -182,7 +169,7 @@ function attachChipEvent(chip) {
       selectedSkills.push(val);
       chip.classList.add('selected');
     }
-    updateButtonState(); // 키워드 변경 시 호출
+    updateButtonState();
   });
 }
 
@@ -198,15 +185,13 @@ customSkillInput.addEventListener('keypress', (e) => {
       chip.dataset.value = val;
       chip.innerHTML = `${val} <span class="delete-chip">×</span>`;
       skillContainer.appendChild(chip);
-      
       const delBtn = chip.querySelector('.delete-chip');
       delBtn.onclick = (ev) => {
         ev.stopPropagation();
         selectedSkills = selectedSkills.filter(s => s !== val);
         chip.remove();
-        updateButtonState(); // 삭제 시에도 호출
+        updateButtonState();
       };
-      
       attachChipEvent(chip);
       selectedSkills.push(val);
       updateButtonState();
@@ -215,21 +200,48 @@ customSkillInput.addEventListener('keypress', (e) => {
   }
 });
 
-// 결과 렌더링
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const formData = new FormData(form);
-  showResults(currentLang, selectedSkills, formData.get('industry'));
+// [FIX] 결과 렌더링 엔진: 새로고침 방지 및 로딩/에러 처리 추가
+form.addEventListener('submit', async (e) => {
+  e.preventDefault(); // 1. 브라우저 기본 새로고침 동작 차단
+  
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn.textContent;
+  const t = translations[currentLang];
+
+  try {
+    // 2. 로딩 상태 시작
+    submitBtn.disabled = true;
+    submitBtn.textContent = t.analyzing; // '분석 중...' 메시지 표시
+
+    // Firebase/OpenAI API 호출 시뮬레이션 (2초 대기)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // 실제 데이터 준비
+    const formData = new FormData(form);
+    
+    // 3. 상태 전환 (폼 숨기고 결과창 표시)
+    document.getElementById('step-form-container').style.display = 'none';
+    const resultContainer = document.getElementById('result-container');
+    resultContainer.style.display = 'block';
+
+    showResults(currentLang, selectedSkills, formData.get('industry'));
+
+  } catch (error) {
+    console.error("Analysis Error:", error);
+    // 4. 에러 핸들링
+    const resultsDiv = document.getElementById('job-results');
+    document.getElementById('step-form-container').style.display = 'none';
+    document.getElementById('result-container').style.display = 'block';
+    resultsDiv.innerHTML = `<p style="color: #ef4444; text-align: center; padding: 2rem; font-weight: bold;">${t.error_msg}</p>`;
+  } finally {
+    // 로딩 상태 해제
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+  }
 });
 
 function showResults(lang, skills, industry) {
-  const resultContainer = document.getElementById('result-container');
-  const formContainer = document.getElementById('step-form-container');
   const resultsDiv = document.getElementById('job-results');
-
-  formContainer.style.display = 'none';
-  resultContainer.style.display = 'block';
-
   const data = lang === 'ko' ? [
     {
       title: "시니어 풀스택 개발자 (Senior Full-stack Developer)",
