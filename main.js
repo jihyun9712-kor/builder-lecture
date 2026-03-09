@@ -8,7 +8,7 @@ let currentLang = 'ko';
 const translations = {
   ko: {
     step1_title: "1단계: 핵심 역량",
-    step1_desc: "기존 키워드를 선택하거나 직접 입력해주세요. (최소 3개)",
+    step1_desc: "기존 키워드를 선택하거나 직접 입력해주세요. (5개 선택)",
     skill_js: "JavaScript",
     skill_python: "Python",
     skill_pm: "프로젝트 관리",
@@ -20,7 +20,7 @@ const translations = {
     skill_agile: "애자일",
     custom_placeholder: "직접 입력 후 Enter",
     next_step: "다음 단계로",
-    selected_count: "개 선택됨",
+    selected_count: "/5",
     prev_step: "이전",
     step2_title: "2단계: 관심 산업군",
     step2_desc: "분석을 희망하는 타겟 산업군을 선택하세요.",
@@ -46,7 +46,7 @@ const translations = {
   },
   en: {
     step1_title: "Step 1: Core Skills",
-    step1_desc: "Select existing keywords or enter manually. (Min 3)",
+    step1_desc: "Select existing keywords or enter manually. (Select 5)",
     skill_js: "JavaScript",
     skill_python: "Python",
     skill_pm: "Project Management",
@@ -58,7 +58,7 @@ const translations = {
     skill_agile: "Agile",
     custom_placeholder: "Type and press Enter",
     next_step: "Next Step",
-    selected_count: " selected",
+    selected_count: "/5",
     prev_step: "Previous",
     step2_title: "Step 2: Target Industry",
     step2_desc: "Select the industry you want to analyze.",
@@ -107,7 +107,7 @@ function updateUI() {
 function updateButtonState() {
   skillsInputHidden.value = JSON.stringify(selectedSkills);
   const nextBtn = document.querySelector('#step-1 .next-btn');
-  if (nextBtn) nextBtn.disabled = selectedSkills.length < 3;
+  if (nextBtn) nextBtn.disabled = selectedSkills.length < 5;
   updateUI();
 }
 
