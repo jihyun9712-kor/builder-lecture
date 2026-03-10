@@ -7,6 +7,14 @@ let currentLang = 'ko';
 // 번역 데이터 (UI용)
 const translations = {
   ko: {
+    hero_title: "당신의 글로벌 커리어 가치를 확인하세요",
+    hero_desc: "AI 기반 분석 시스템이 당신의 핵심 역량과 성과를 바탕으로 최적의 글로벌 직무를 매칭해 드립니다.",
+    vp1_title: "정밀한 역량 매칭",
+    vp1_desc: "단순한 키워드 매칭을 넘어, 입력하신 실제 성과 데이터를 바탕으로 실무에서 바로 통용될 수 있는 직무를 제안합니다.",
+    vp2_title: "글로벌 시장 트렌드",
+    vp2_desc: "전 세계 주요 IT 및 비즈니스 거점의 실시간 채용 데이터를 분석하여 현재 가장 유망한 산업군 정보를 제공합니다.",
+    vp3_title: "맞춤형 커리어 가이드",
+    vp3_desc: "분석된 결과에 따라 부족한 역량을 보완할 수 있는 학습 방향과 글로벌 네트워크 진출 팁을 함께 제공합니다.",
     step1_title: "1단계: 핵심 역량",
     step1_desc: "기존 키워드를 선택하거나 직접 입력해주세요. (5개 선택)",
     skill_js: "JavaScript",
@@ -45,6 +53,14 @@ const translations = {
     retry: "다시 하기"
   },
   en: {
+    hero_title: "Verify Your Global Career Value",
+    hero_desc: "Our AI-powered analysis matches you with optimal global career paths based on your core competencies and achievements.",
+    vp1_title: "Precise Skill Matching",
+    vp1_desc: "Going beyond simple keywords, we suggest jobs that translate directly to the real world based on your performance data.",
+    vp2_title: "Global Market Trends",
+    vp2_desc: "We analyze real-time hiring data from major global IT and business hubs to provide info on promising industries.",
+    vp3_title: "Custom Career Guide",
+    vp3_desc: "Receive learning directions to fill skill gaps and tips for entering global networks based on your results.",
     step1_title: "Step 1: Core Skills",
     step1_desc: "Select existing keywords or enter manually. (Select 5)",
     skill_js: "JavaScript",

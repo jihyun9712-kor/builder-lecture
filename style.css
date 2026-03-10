@@ -26,18 +26,159 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: all 0.3s;
-  padding: 80px 0 3rem;
+  padding: 0;
 }
 
-/* Top Controls Area */
+/* Header & Navigation */
+.main-header {
+  width: 100%;
+  background: var(--container-bg);
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 4rem 1rem 3rem;
+  max-width: 800px;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: var(--secondary-btn);
+  line-height: 1.6;
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+}
+
+/* Value Proposition */
+.value-proposition {
+  width: 100%;
+  max-width: 1000px;
+  padding: 5rem 20px;
+}
+
+.vp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.vp-item h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.8rem;
+  color: var(--accent-color);
+}
+
+.vp-item p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--secondary-btn);
+}
+
+/* Footer */
+.main-footer {
+  width: 100%;
+  background: var(--container-bg);
+  padding: 3rem 0;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.footer-links {
+  margin-bottom: 1.5rem;
+}
+
+.footer-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: var(--secondary-btn);
+  font-size: 0.9rem;
+}
+
+.main-footer p {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+/* Static Pages */
+.static-page .content-container {
+  max-width: 800px;
+  width: 90%;
+  padding: 4rem 0;
+  line-height: 1.8;
+}
+
+.static-page h1 { font-size: 2.5rem; margin-bottom: 2rem; }
+.static-page h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--accent-color); }
+.static-page section { margin-bottom: 3rem; }
+
+.contact-card {
+  background: var(--container-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  margin: 2rem 0;
+}
+
+/* Top Controls Adjustments */
 .top-controls {
-  position: fixed;
-  top: 10px;
-  right: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 1000;
+  margin-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .vp-grid { grid-template-columns: 1fr; }
+  .hero-section h1 { font-size: 2rem; }
 }
 
 .mini-select {
