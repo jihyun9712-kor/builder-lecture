@@ -43,9 +43,13 @@
         <div class="step" data-step="3">3</div>
         <div class="step-line"></div>
         <div class="step" data-step="4">4</div>
+        <div class="step-line"></div>
+        <div class="step" data-step="5">5</div>
       </div>
 
       <form id="multi-step-form">
+        <!-- ... (Step 1~3 unchanged) ... -->
+
         <!-- Step 1: LinkedIn Skills -->
         <div class="form-step active" id="step-1">
           <h2 data-i18n="step1_title">1단계: 핵심 역량</h2>
@@ -128,29 +132,68 @@
             <button type="button" class="submit-btn next-btn" data-i18n="next_step">다음 단계로</button>
           </div>
         </div>
-        <!-- Step 4: Work Style -->
+        <!-- Step 4: Work Style (Location) -->
         <div class="form-step" id="step-4">
-          <h2 data-i18n="step4_title">4단계: 업무 형태</h2>
-          <p class="step-desc" data-i18n="step4_desc">가장 선호하는 근무 방식을 선택해주세요.</p>
+          <h2 data-i18n="step4_title">4단계: 업무 환경</h2>
+          <p class="step-desc" data-i18n="step4_desc">가장 선호하는 근무 장소를 선택해주세요.</p>
           <div class="work-style-options">
             <label class="work-option">
-              <input type="radio" name="work_style" value="Remote" checked>
+              <input type="radio" name="loc_freedom" value="remote" checked>
               <div class="option-card" data-i18n="work_remote">Remote</div>
             </label>
             <label class="work-option">
-              <input type="radio" name="work_style" value="Flexible">
-              <div class="option-card" data-i18n="work_flexible">Flexible</div>
-            </label>
-            <label class="work-option">
-              <input type="radio" name="work_style" value="Office">
+              <input type="radio" name="loc_freedom" value="office">
               <div class="option-card" data-i18n="work_office">Office</div>
             </label>
           </div>
           <div class="btn-group">
             <button type="button" class="submit-btn prev-btn secondary" data-i18n="prev_step">이전</button>
+            <button type="button" class="submit-btn next-btn" data-i18n="next_step">다음 단계로</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Career Values -->
+        <div class="form-step" id="step-5">
+          <h2 data-i18n="step5_title">5단계: 직업적 가치관</h2>
+          <p class="step-desc" data-i18n="step5_desc">당신을 가장 행복하게 만드는 가치를 선택해주세요.</p>
+
+          <div class="value-survey-grid">
+            <div class="value-q">
+              <label data-i18n="val_autonomy">자율성</label>
+              <div class="value-choices">
+                <input type="radio" name="v_autonomy" value="decide" id="v_a1" checked><label for="v_a1" data-i18n="val_a1">스스로 결정</label>
+                <input type="radio" name="v_autonomy" value="manual" id="v_a2"><label for="v_a2" data-i18n="val_a2">매뉴얼 중심</label>
+              </div>
+            </div>
+            <div class="value-q">
+              <label data-i18n="val_social">상호작용</label>
+              <div class="value-choices">
+                <input type="radio" name="v_social" value="team" id="v_s1" checked><label for="v_s1" data-i18n="val_s1">팀워크/고객</label>
+                <input type="radio" name="v_social" value="solo" id="v_s2"><label for="v_s2" data-i18n="val_s2">개인 몰입</label>
+              </div>
+            </div>
+            <div class="value-q">
+              <label data-i18n="val_reward">보상체계</label>
+              <div class="value-choices">
+                <input type="radio" name="v_reward" value="high" id="v_r1" checked><label for="v_r1" data-i18n="val_r1">성과급/고수익</label>
+                <input type="radio" name="v_reward" value="stable" id="v_r2"><label for="v_r2" data-i18n="val_r2">안정적 급여</label>
+              </div>
+            </div>
+            <div class="value-q">
+              <label data-i18n="val_source">성취원천</label>
+              <div class="value-choices">
+                <input type="radio" name="v_source" value="solve" id="v_o1" checked><label for="v_o1" data-i18n="val_o1">문제 해결</label>
+                <input type="radio" name="v_source" value="visual" id="v_o2"><label for="v_o2" data-i18n="val_o2">시각적 완성도</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="submit-btn prev-btn secondary" data-i18n="prev_step">이전</button>
             <button type="submit" class="submit-btn" data-i18n="find_jobs">분석 시작하기</button>
           </div>
         </div>
+
       </form>
     </div>
 
