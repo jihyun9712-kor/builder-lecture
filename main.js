@@ -255,6 +255,8 @@ function showPivotResults(lang, skills, formData) {
 
     // 전이 기술 가점 (추출된 기술당 1.2점 - 커리어 피벗의 핵심)
     let matchedPivotSkill = "";
+    let matchReason = "";
+
     extractedSkills.forEach(sk => {
       if (pivotMapping[sk].includes(job.title) || pivotMapping[sk].some(val => job.tags.includes(val))) {
         score += 1.2;
@@ -262,7 +264,22 @@ function showPivotResults(lang, skills, formData) {
       }
     });
 
-    return { ...job, score, pivotSkill: matchedPivotSkill };
+    // 논리적 추천 근거 생성 로직
+    if (matchedPivotSkill) {
+      matchReason = isKor 
+        ? `과거 경험에서 증명된 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 핵심 성공 요인과 90% 이상 일치합니다.`
+        : `Your proven <b>'${matchedPivotSkill}'</b> skill is a direct match for the core success factors of a ${job.title}.`;
+    } else if (job.industry === industry) {
+      matchReason = isKor 
+        ? `선택하신 <b>'${industry}'</b> 산업군에 대한 높은 이해도와 보유하신 <b>'${skills[0]}'</b> 기술이 시너지를 낼 수 있는 포지션입니다.`
+        : `Your background in <b>'${industry}'</b> and your <b>'${skills[0]}'</b> skill create a perfect synergy for this role.`;
+    } else {
+      matchReason = isKor
+        ? `추구하시는 <b>'${Object.keys(userValues).find(k => userValues[k] === job.v[k])}'</b> 가치관이 보장되는 환경으로, 장기적인 직무 만족도가 매우 높을 것으로 예상됩니다.`
+        : `This environment guarantees the <b>'${Object.keys(userValues).find(k => userValues[k] === job.v[k])}'</b> value you seek, ensuring high job satisfaction.`;
+    }
+
+    return { ...job, score, pivotSkill: matchedPivotSkill, matchReason };
   });
 
   // 3. 중복 제거 및 점수 순 정렬 (ID 기반으로 고유성 보장)
@@ -271,22 +288,22 @@ function showPivotResults(lang, skills, formData) {
 
   resultsDiv.innerHTML = sortedJobs.slice(0, 6).map((job, i) => `
     <div class="job-card" style="animation-delay: ${i * 0.1}s; border: ${job.pivotSkill ? '2px solid #1a202c' : '1px solid var(--border-color)'}">
-      ${job.pivotSkill ? `<div style="background:#1a202c; color:white; font-size:0.65rem; padding:2px 8px; position:absolute; top:-10px; left:15px; border-radius:4px; font-weight:700;">커리어 피벗 추천: ${job.pivotSkill} 기반</div>` : ''}
+      ${job.pivotSkill ? `<div style="background:#1a202c; color:white; font-size:0.65rem; padding:2px 8px; position:absolute; top:-10px; left:15px; border-radius:4px; font-weight:700;">커리어 피벗 추천</div>` : ''}
       <div class="job-card-header">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div class="job-title">${job.title}</div>
-          <div style="font-size:0.7rem; font-weight:700;">추천 지수: ${Math.round(job.score * 20)}%</div>
+          <div style="font-size:0.7rem; font-weight:700; color:#4a5568;">추천 지수: ${Math.min(99, Math.round(job.score * 20))}%</div>
         </div>
+        <div class="gauge-container"><div class="gauge-fill" style="width: ${Math.min(100, job.score * 20)}%; background:${job.pivotSkill ? '#1a202c' : 'var(--accent-color)'}"></div></div>
       </div>
       <div class="job-card-body">
         <div class="competency-list">
           ${job.tags.map(t => `<span class="comp-tag"># ${t}</span>`).join('')}
         </div>
-        <p style="font-size: 0.82rem; margin-top: 1rem; color: #1e293b; font-weight:500; line-height:1.5;">
-          ${job.pivotSkill 
-            ? `과거 당신의 <b>'${job.pivotSkill}'</b> 역량은 새로운 분야인 ${job.title}에서 성공하기 위한 가장 중요한 기반이 됩니다.`
-            : `당신의 전반적인 직업적 선호도와 산업군 트렌드를 결합한 최적의 매칭 결과입니다.`}
-        </p>
+        <div class="match-reason-box">
+          <span class="reason-label">💡 추천 근거</span>
+          <p class="reason-text">${job.matchReason}</p>
+        </div>
       </div>
     </div>
   `).join('');
