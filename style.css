@@ -336,8 +336,76 @@ body.dark-mode .mini-btn {
   color: var(--secondary-btn);
   font-weight: 600;
 }
-.submit-btn.secondary { background-color: var(--secondary-btn); flex: 0.4; }
-.btn-group { display: flex; gap: 10px; margin-top: 1.5rem; }
+/* Minimal & Modern Buttons */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.next-btn, button[type="submit"] {
+  background-color: #1a202c !important;
+  color: #ffffff !important;
+}
+
+.next-btn::after, button[type="submit"]::after {
+  content: ' →';
+  font-weight: 400;
+  transition: transform 0.2s;
+}
+
+.prev-btn.secondary {
+  background-color: #ffffff !important;
+  color: #4a5568 !important;
+  border: 1px solid #e2e8f0 !important;
+  flex: 0.4;
+}
+
+.prev-btn::before {
+  content: '← ';
+  font-weight: 400;
+  transition: transform 0.2s;
+}
+
+/* Hover States */
+.submit-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.next-btn:not(:disabled):hover::after, button[type="submit"]:not(:disabled):hover::after {
+  transform: translateX(3px);
+}
+
+.prev-btn:not(:disabled):hover::before {
+  transform: translateX(-3px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 2rem;
+}
 
 /* Job Results */
 .job-card { background: var(--container-bg); border: 1px solid var(--border-color); border-radius: 20px; margin-bottom: 1.5rem; overflow: hidden; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s; }
