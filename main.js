@@ -145,6 +145,21 @@ const nextBtns = document.querySelectorAll('.next-btn');
 const prevBtns = document.querySelectorAll('.prev-btn');
 let currentStep = 1;
 
+// 폼 및 입력 필드 상태 관리
+const performanceTextarea = document.getElementById('performance');
+const charCountSpan = document.getElementById('char-count');
+
+if (performanceTextarea) {
+  performanceTextarea.addEventListener('input', (e) => {
+    const len = e.target.value.length;
+    charCountSpan.textContent = len;
+    if (len > 200) {
+      e.target.value = e.target.value.substring(0, 200);
+      charCountSpan.textContent = 200;
+    }
+  });
+}
+
 function updateSteps() {
   steps.forEach(step => step.classList.remove('active'));
   indicators.forEach(ind => {
@@ -152,6 +167,20 @@ function updateSteps() {
     if (parseInt(ind.dataset.step) <= currentStep) ind.classList.add('active');
   });
   document.getElementById(`step-${currentStep}`).classList.add('active');
+  
+  // 버튼 활성화 로직 추가
+  const currentStepEl = document.getElementById(`step-${currentStep}`);
+  const nextBtn = currentStepEl.querySelector('.next-btn');
+  
+  if (currentStep === 2) {
+    const industries = document.querySelectorAll('input[name="industry"]');
+    const checkIndustry = () => {
+      if (nextBtn) nextBtn.disabled = !Array.from(industries).some(i => i.checked);
+    };
+    industries.forEach(i => i.addEventListener('change', checkIndustry));
+    checkIndustry();
+  }
+  
   updateUI();
 }
 
