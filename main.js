@@ -6,13 +6,19 @@ let currentLang = 'ko';
 
 // --- 전이 가능한 기술(Transferable Skills) 매핑 테이블 ---
 const pivotMapping = {
-  "섬세함": ["UX Designer", "Quality Assurance", "Precision Medicine"],
-  "기획": ["Product Manager", "Content Producer", "Strategy Consultant"],
-  "미감": ["Brand Director", "UI Designer", "Virtual Human Producer"],
-  "소통": ["Community Manager", "Client Relations", "Sales Lead"],
-  "분석": ["Data Analyst", "Risk Analyst", "Market Strategist"],
-  "관리": ["Operations Manager", "Project Manager", "DAO Operator"],
-  "창의": ["Prompt Engineer", "Creative Director", "Innovation Lead"]
+  "섬세함": ["UX Designer", "Quality Assurance", "Precision Medicine", "Premium Hospitality Manager", "Space Curator"],
+  "기획": ["Product Manager", "Content Producer", "Strategy Consultant", "Senior Care Planner", "Edutech Content Planner"],
+  "미감": ["Brand Director", "UI Designer", "Virtual Human Producer", "Space Curator", "Digital Stationery Designer"],
+  "소통": ["Community Manager", "Client Relations", "Sales Lead", "Non-face-to-face Counselor", "Personal Branding Director"],
+  "분석": ["Data Analyst", "Risk Analyst", "Market Strategist", "ESG Consultant"],
+  "관리": ["Operations Manager", "Project Manager", "DAO Operator", "Vegan Business Operator"],
+  "창의": ["Prompt Engineer", "Creative Director", "Innovation Lead", "Local Branding Specialist", "Virtual Space Designer"],
+  "친환경": ["Vegan Business Operator", "Upcycling Professional", "ESG Consultant"],
+  "로컬": ["Local Branding Specialist"],
+  "디자인": ["Digital Stationery Designer", "Virtual Space Designer", "UX Designer"],
+  "심리": ["Non-face-to-face Counselor"],
+  "교육": ["Edutech Content Planner"],
+  "실버": ["Senior Care Planner"]
 };
 
 const translations = {
@@ -48,6 +54,10 @@ const translations = {
     ind_healthcare: "의료 / 바이오",
     ind_ecommerce: "커머스 / 유통",
     ind_media: "미디어 / 광고",
+    ind_lifestyle: "라이프스타일 / 서비스",
+    ind_creative: "크리에이티브",
+    ind_ecosocial: "친환경 / 소셜",
+    ind_educounsel: "전문 상담 / 교육",
     step3_title: "3단계: 주요 성과",
     step3_desc: "AI가 당신의 경험에서 '전이 가능한 기술'을 추출합니다.",
     perf_placeholder: "예: '호텔 파티시에로서 섬세한 레시피 기획과 시각적 미감을 강조한 디저트를 제작함'",
@@ -77,7 +87,68 @@ const translations = {
     pivot_reason: "당신의 기존 강점인 [EXTRACTED] 역량이 이 직무의 핵심 성공 요인과 일치합니다."
   },
   en: {
-    // (English translations omitted for brevity in this example but should be included)
+    hero_title: "Verify Your Global Career Value",
+    hero_desc: "Our AI-based analysis system matches you with optimal global roles based on your core competencies and achievements.",
+    vp1_title: "Precise Competency Matching",
+    vp1_desc: "Beyond simple keyword matching, we suggest roles that are immediately applicable in practice based on your actual performance data.",
+    vp2_title: "Global Market Trends",
+    vp2_desc: "We provide information on the most promising industries by analyzing real-time hiring data from major global IT and business hubs.",
+    vp3_title: "Customized Career Guide",
+    vp3_desc: "Based on the analysis results, we provide learning directions to supplement lacking skills and tips for entering global networks.",
+    step1_title: "Step 1: Core Competencies",
+    step1_desc: "Select existing keywords or enter them directly. (Select 5)",
+    skill_js: "JavaScript",
+    skill_python: "Python",
+    skill_pm: "Project Management",
+    skill_da: "Data Analysis",
+    skill_uiux: "UI/UX Design",
+    skill_dm: "Digital Marketing",
+    skill_sql: "SQL",
+    skill_ps: "Problem Solving",
+    skill_agile: "Agile",
+    custom_placeholder: "Enter directly and press Enter",
+    next_step: "Next Step",
+    selected_count: "/5",
+    prev_step: "Previous",
+    step2_title: "Step 2: Target Industry",
+    step2_desc: "Select the target industry you wish to analyze.",
+    industry_placeholder: "Select Industry",
+    ind_it: "IT / Software",
+    ind_finance: "Finance / Fintech",
+    ind_healthcare: "Healthcare / Bio",
+    ind_ecommerce: "E-commerce / Retail",
+    ind_media: "Media / Ads",
+    ind_lifestyle: "Lifestyle / Service",
+    ind_creative: "Creative",
+    ind_ecosocial: "Eco / Social",
+    ind_educounsel: "Professional / Edu",
+    step3_title: "Step 3: Key Achievements",
+    step3_desc: "AI extracts 'transferable skills' from your experience.",
+    perf_placeholder: "E.g., 'As a hotel pastry chef, I created desserts emphasizing delicate recipe planning and visual aesthetics.'",
+    step4_title: "Step 4: Work Environment",
+    step4_desc: "Please select your preferred work location.",
+    work_remote: "Remote",
+    work_office: "Office",
+    step5_title: "Step 5: Professional Values",
+    step5_desc: "Please select the values that make you happiest.",
+    val_autonomy: "Autonomy",
+    val_a1: "Decide myself",
+    val_a2: "Manual-oriented",
+    val_social: "Interaction",
+    val_s1: "Teamwork/Client",
+    val_s2: "Individual focus",
+    val_reward: "Reward System",
+    val_r1: "Incentive/High Income",
+    val_r2: "Stable Salary",
+    val_source: "Source of Achievement",
+    val_o1: "Problem Solving",
+    val_o2: "Visual Perfection",
+    find_jobs: "Start Analysis",
+    analyzing: "Analyzing career pivot paths...",
+    error_msg: "Failed to load data. Please try again.",
+    result_title: "Career Pivot Analysis Results",
+    retry: "Retry",
+    pivot_reason: "Your existing strength in [EXTRACTED] matches the core success factors of this role."
   }
 };
 
@@ -227,6 +298,27 @@ function showPivotResults(lang, skills, formData) {
 
   // 고유한 직무 데이터베이스 (중복 방지를 위해 ID 부여)
   const jobDatabase = [
+    // Lifestyle
+    { id: 'life_hosp', industry: "Lifestyle", title: isKor ? "프리미엄 호스피탈리티 매니저" : "Premium Hospitality Manager", tags: ["Service", "Planning"], v: { location: 'office', autonomy: 'manual', social: 'team', reward: 'stable', source: 'solve' } },
+    { id: 'life_space', industry: "Lifestyle", title: isKor ? "공간 큐레이터" : "Space Curator", tags: ["Design", "Experience"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
+    { id: 'life_brand', industry: "Lifestyle", title: isKor ? "퍼스널 브랜딩 디렉터" : "Personal Branding Director", tags: ["Marketing", "Consulting"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'solve' } },
+    
+    // Creative
+    { id: 'cre_local', industry: "Creative", title: isKor ? "로컬 브랜딩 전문가" : "Local Branding Specialist", tags: ["Local", "Creative"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
+    { id: 'cre_stat', industry: "Creative", title: isKor ? "디지털 문방구 디자이너" : "Digital Stationery Designer", tags: ["Design", "E-commerce"], v: { location: 'remote', autonomy: 'decide', social: 'solo', reward: 'high', source: 'visual' } },
+    { id: 'cre_virt', industry: "Creative", title: isKor ? "가상 공간 디자이너" : "Virtual Space Designer", tags: ["3D", "Metaverse"], v: { location: 'remote', autonomy: 'decide', social: 'solo', reward: 'high', source: 'visual' } },
+    
+    // Eco/Social
+    { id: 'eco_vegan', industry: "EcoSocial", title: isKor ? "비건 비즈니스 운영자" : "Vegan Business Operator", tags: ["Sustainability", "F&B"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'stable', source: 'solve' } },
+    { id: 'eco_esg', industry: "EcoSocial", title: isKor ? "ESG 컨설턴트" : "ESG Consultant", tags: ["Analysis", "CSR"], v: { location: 'office', autonomy: 'manual', social: 'team', reward: 'high', source: 'solve' } },
+    { id: 'eco_up', industry: "EcoSocial", title: isKor ? "업사이클링 전문가" : "Upcycling Professional", tags: ["Environment", "Design"], v: { location: 'office', autonomy: 'decide', social: 'solo', reward: 'stable', source: 'visual' } },
+    
+    // Edu/Counsel
+    { id: 'edu_senior', industry: "EduCounsel", title: isKor ? "시니어 케어 기획자" : "Senior Care Planner", tags: ["Silver Economy", "Planning"], v: { location: 'office', autonomy: 'manual', social: 'team', reward: 'stable', source: 'solve' } },
+    { id: 'edu_psych', industry: "EduCounsel", title: isKor ? "비대면 심리 상담가" : "Non-face-to-face Counselor", tags: ["Counseling", "Digital"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'stable', source: 'solve' } },
+    { id: 'edu_tech', industry: "EduCounsel", title: isKor ? "에듀테크 콘텐츠 기획자" : "Edutech Content Planner", tags: ["Education", "Content"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'solve' } },
+
+    // Original roles
     { id: 'fin_sec', industry: "Finance", title: isKor ? "핀테크 보안 전문가" : "Fintech Security Specialist", tags: ["Web3", "Security"], v: { location: 'remote', autonomy: 'manual', social: 'solo', reward: 'stable', source: 'solve' } },
     { id: 'ux_des', industry: "IT/Software", title: isKor ? "UX 디자이너" : "UX Designer", tags: ["Design", "Research"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
     { id: 'brand_dir', industry: "Media/Ads", title: isKor ? "푸드 브랜딩 디렉터" : "Food Brand Director", tags: ["Creative", "Marketing"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'high', source: 'visual' } },
@@ -241,7 +333,7 @@ function showPivotResults(lang, skills, formData) {
     let score = 0;
     
     // 산업군 가점
-    if (job.industry === industry) score += 1.0;
+    if (job.industry === industry) score += 2.0; // 산업군 매칭 가중치 상향
     if (job.industry === "General") score += 0.5;
 
     // 가치관 매칭 가점 (각 0.5점)
@@ -253,13 +345,13 @@ function showPivotResults(lang, skills, formData) {
     // 재택근무 가점 (하드 필터링 대신 가점 0.8점 부여)
     if (job.v.location === userValues.location) score += 0.8;
 
-    // 전이 기술 가점 (추출된 기술당 1.2점 - 커리어 피벗의 핵심)
+    // 전이 기술 가점 (추출된 기술당 1.5점 - 커리어 피벗의 핵심)
     let matchedPivotSkill = "";
     let matchReason = "";
 
     extractedSkills.forEach(sk => {
       if (pivotMapping[sk].includes(job.title) || pivotMapping[sk].some(val => job.tags.includes(val))) {
-        score += 1.2;
+        score += 1.5;
         matchedPivotSkill = sk;
       }
     });
@@ -267,16 +359,16 @@ function showPivotResults(lang, skills, formData) {
     // 논리적 추천 근거 생성 로직
     if (matchedPivotSkill) {
       matchReason = isKor 
-        ? `과거 경험에서 증명된 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 핵심 성공 요인과 90% 이상 일치합니다.`
-        : `Your proven <b>'${matchedPivotSkill}'</b> skill is a direct match for the core success factors of a ${job.title}.`;
+        ? `과거 경험에서 증명된 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 핵심 성공 요인과 95% 이상 일치합니다. 이는 성공적인 커리어 피벗의 강력한 지표입니다.`
+        : `Your proven <b>'${matchedPivotSkill}'</b> skill is a direct match (95%+) for the core success factors of a ${job.title}, indicating a strong career pivot potential.`;
     } else if (job.industry === industry) {
       matchReason = isKor 
-        ? `선택하신 <b>'${industry}'</b> 산업군에 대한 높은 이해도와 보유하신 <b>'${skills[0]}'</b> 기술이 시너지를 낼 수 있는 포지션입니다.`
-        : `Your background in <b>'${industry}'</b> and your <b>'${skills[0]}'</b> skill create a perfect synergy for this role.`;
+        ? `선택하신 <b>'${translations.ko['ind_' + industry.toLowerCase()] || industry}'</b> 분야에 대한 높은 관심과 보유하신 <b>'${skills[0]}'</b> 역량을 결합하여 새로운 가치를 창출할 수 있는 실무 중심 포지션입니다.`
+        : `This role allows you to combine your interest in <b>'${translations.en['ind_' + industry.toLowerCase()] || industry}'</b> with your <b>'${skills[0]}'</b> skill to create new value.`;
     } else {
       matchReason = isKor
-        ? `추구하시는 <b>'${Object.keys(userValues).find(k => userValues[k] === job.v[k])}'</b> 가치관이 보장되는 환경으로, 장기적인 직무 만족도가 매우 높을 것으로 예상됩니다.`
-        : `This environment guarantees the <b>'${Object.keys(userValues).find(k => userValues[k] === job.v[k])}'</b> value you seek, ensuring high job satisfaction.`;
+        ? `당신이 중시하는 <b>'${translations.ko['val_' + Object.keys(userValues).find(k => userValues[k] === job.v[k.replace('v_', '')])] || '맞춤'}'</b> 가치가 실현되는 환경으로, 심리적 안정감과 성취감을 동시에 얻을 수 있습니다.`
+        : `This environment realizes the <b>'${translations.en['val_' + Object.keys(userValues).find(k => userValues[k] === job.v[k.replace('v_', '')])] || 'customized'}'</b> value you prioritize.`;
     }
 
     return { ...job, score, pivotSkill: matchedPivotSkill, matchReason };
@@ -292,16 +384,16 @@ function showPivotResults(lang, skills, formData) {
       <div class="job-card-header">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div class="job-title">${job.title}</div>
-          <div style="font-size:0.7rem; font-weight:700; color:#4a5568;">추천 지수: ${Math.min(99, Math.round(job.score * 20))}%</div>
+          <div style="font-size:0.7rem; font-weight:700; color:#4a5568;">매칭 지수: ${Math.min(99, Math.round(job.score * 15))}%</div>
         </div>
-        <div class="gauge-container"><div class="gauge-fill" style="width: ${Math.min(100, job.score * 20)}%; background:${job.pivotSkill ? '#1a202c' : 'var(--accent-color)'}"></div></div>
+        <div class="gauge-container"><div class="gauge-fill" style="width: ${Math.min(100, job.score * 15)}%; background:${job.pivotSkill ? '#1a202c' : 'var(--accent-color)'}"></div></div>
       </div>
       <div class="job-card-body">
         <div class="competency-list">
           ${job.tags.map(t => `<span class="comp-tag"># ${t}</span>`).join('')}
         </div>
         <div class="match-reason-box">
-          <span class="reason-label">💡 추천 근거</span>
+          <span class="reason-label">💡 분석 리포트</span>
           <p class="reason-text">${job.matchReason}</p>
         </div>
       </div>
