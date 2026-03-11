@@ -64,6 +64,7 @@ const translations = {
     step4_title: "4단계: 업무 환경",
     step4_desc: "가장 선호하는 근무 장소를 선택해주세요.",
     work_remote: "원격 근무 (Remote)",
+    work_hybrid: "하이브리드 (Hybrid)",
     work_office: "오피스 출근 (Office)",
     step5_title: "5단계: 직업적 가치관",
     step5_desc: "당신을 가장 행복하게 만드는 가치를 선택해주세요.",
@@ -128,6 +129,7 @@ const translations = {
     step4_title: "Step 4: Work Environment",
     step4_desc: "Please select your preferred work location.",
     work_remote: "Remote",
+    work_hybrid: "Hybrid",
     work_office: "Office",
     step5_title: "Step 5: Professional Values",
     step5_desc: "Please select the values that make you happiest.",
@@ -304,13 +306,13 @@ function showPivotResults(lang, skills, formData) {
     { id: 'life_brand', industry: "Lifestyle", title: isKor ? "퍼스널 브랜딩 디렉터" : "Personal Branding Director", tags: ["Marketing", "Consulting"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'solve' } },
     
     // Creative
-    { id: 'cre_local', industry: "Creative", title: isKor ? "로컬 브랜딩 전문가" : "Local Branding Specialist", tags: ["Local", "Creative"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
+    { id: 'cre_local', industry: "Creative", title: isKor ? "로컬 브랜딩 전문가" : "Local Branding Specialist", tags: ["Local", "Creative"], v: { location: 'hybrid', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
     { id: 'cre_stat', industry: "Creative", title: isKor ? "디지털 문방구 디자이너" : "Digital Stationery Designer", tags: ["Design", "E-commerce"], v: { location: 'remote', autonomy: 'decide', social: 'solo', reward: 'high', source: 'visual' } },
     { id: 'cre_virt', industry: "Creative", title: isKor ? "가상 공간 디자이너" : "Virtual Space Designer", tags: ["3D", "Metaverse"], v: { location: 'remote', autonomy: 'decide', social: 'solo', reward: 'high', source: 'visual' } },
     
     // Eco/Social
     { id: 'eco_vegan', industry: "EcoSocial", title: isKor ? "비건 비즈니스 운영자" : "Vegan Business Operator", tags: ["Sustainability", "F&B"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'stable', source: 'solve' } },
-    { id: 'eco_esg', industry: "EcoSocial", title: isKor ? "ESG 컨설턴트" : "ESG Consultant", tags: ["Analysis", "CSR"], v: { location: 'office', autonomy: 'manual', social: 'team', reward: 'high', source: 'solve' } },
+    { id: 'eco_esg', industry: "EcoSocial", title: isKor ? "ESG 컨설턴트" : "ESG Consultant", tags: ["Analysis", "CSR"], v: { location: 'hybrid', autonomy: 'manual', social: 'team', reward: 'high', source: 'solve' } },
     { id: 'eco_up', industry: "EcoSocial", title: isKor ? "업사이클링 전문가" : "Upcycling Professional", tags: ["Environment", "Design"], v: { location: 'office', autonomy: 'decide', social: 'solo', reward: 'stable', source: 'visual' } },
     
     // Edu/Counsel
@@ -320,7 +322,7 @@ function showPivotResults(lang, skills, formData) {
 
     // Original roles
     { id: 'fin_sec', industry: "Finance", title: isKor ? "핀테크 보안 전문가" : "Fintech Security Specialist", tags: ["Web3", "Security"], v: { location: 'remote', autonomy: 'manual', social: 'solo', reward: 'stable', source: 'solve' } },
-    { id: 'ux_des', industry: "IT/Software", title: isKor ? "UX 디자이너" : "UX Designer", tags: ["Design", "Research"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
+    { id: 'ux_des', industry: "IT/Software", title: isKor ? "UX 디자이너" : "UX Designer", tags: ["Design", "Research"], v: { location: 'hybrid', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
     { id: 'brand_dir', industry: "Media/Ads", title: isKor ? "푸드 브랜딩 디렉터" : "Food Brand Director", tags: ["Creative", "Marketing"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'high', source: 'visual' } },
     { id: 'prompt_eng', industry: "IT/Software", title: isKor ? "프롬프트 엔지니어" : "Prompt Engineer", tags: ["AI", "LLM"], v: { location: 'remote', autonomy: 'decide', social: 'solo', reward: 'high', source: 'solve' } },
     { id: 'dtx_ux', industry: "Healthcare", title: isKor ? "디지털 치료제 UX 디자이너" : "DTx UX Designer", tags: ["Health-tech", "Design"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
@@ -342,8 +344,17 @@ function showPivotResults(lang, skills, formData) {
     if (job.v.reward === userValues.reward) score += 0.5;
     if (job.v.source === userValues.source) score += 0.5;
 
-    // 재택근무 가점 (하드 필터링 대신 가점 0.8점 부여)
-    if (job.v.location === userValues.location) score += 0.8;
+    // 재택근무 가점 (하드 필터링 대신 가점 부여)
+    if (job.v.location === userValues.location) {
+      if (userValues.location === 'remote') {
+        const isTechJob = /AI|소프트웨어|개발|Software|Develop/.test(job.title) || job.tags.some(t => /AI|소프트웨어|개발|Software|Develop/.test(t));
+        // 전통적 직종의 리모트 워크 형태에 더 높은 우선순위 부여 (+1.5)
+        // 일반 IT/테크 재택근무는 기존 가점 유지 (+0.8)
+        score += isTechJob ? 0.8 : 1.5;
+      } else {
+        score += 0.8;
+      }
+    }
 
     // 전이 기술 가점 (추출된 기술당 1.5점 - 커리어 피벗의 핵심)
     let matchedPivotSkill = "";
