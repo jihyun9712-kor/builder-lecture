@@ -378,7 +378,28 @@ function showPivotResults(lang, skills, formData) {
   const uniqueJobs = Array.from(new Map(scoredJobs.map(item => [item.id, item])).values());
   const sortedJobs = uniqueJobs.sort((a, b) => b.score - a.score);
 
-  resultsDiv.innerHTML = sortedJobs.slice(0, 6).map((job, i) => `
+  // 4. IT/AI 편중 방지 로직 (최대 20% 제한)
+  const maxResults = 6;
+  const maxTechAllowed = Math.floor(maxResults * 0.2) || 1; // 6개 중 20%면 1.2개 -> 최대 1개
+  let currentTechCount = 0;
+  const finalResults = [];
+
+  for (const job of sortedJobs) {
+    if (finalResults.length >= maxResults) break;
+    
+    const isTechJob = /AI|소프트웨어|개발|Software|Develop/.test(job.title) || job.tags.some(t => /AI|소프트웨어|개발|Software|Develop/.test(t));
+    
+    if (isTechJob) {
+      if (currentTechCount < maxTechAllowed) {
+        finalResults.push(job);
+        currentTechCount++;
+      }
+    } else {
+      finalResults.push(job);
+    }
+  }
+
+  resultsDiv.innerHTML = finalResults.map((job, i) => `
     <div class="job-card" style="animation-delay: ${i * 0.1}s; border: ${job.pivotSkill ? '2px solid #1a202c' : '1px solid var(--border-color)'}">
       ${job.pivotSkill ? `<div style="background:#1a202c; color:white; font-size:0.65rem; padding:2px 8px; position:absolute; top:-10px; left:15px; border-radius:4px; font-weight:700;">커리어 피벗 추천</div>` : ''}
       <div class="job-card-header">
