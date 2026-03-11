@@ -23,16 +23,16 @@ const pivotMapping = {
 
 const translations = {
   ko: {
-    hero_title: "당신의 글로벌 커리어 가치를 확인하세요",
-    hero_desc: "AI 기반 분석 시스템이 당신의 핵심 역량과 성과를 바탕으로 최적의 글로벌 직무를 매칭해 드립니다.",
-    vp1_title: "정밀한 역량 매칭",
-    vp1_desc: "단순한 키워드 매칭을 넘어, 입력하신 실제 성과 데이터를 바탕으로 실무에서 바로 통용될 수 있는 직무를 제안합니다.",
-    vp2_title: "글로벌 시장 트렌드",
-    vp2_desc: "전 세계 주요 IT 및 비즈니스 거점의 실시간 채용 데이터를 분석하여 현재 가장 유망한 산업군 정보를 제공합니다.",
-    vp3_title: "맞춤형 커리어 가이드",
-    vp3_desc: "분석된 결과에 따라 부족한 역량을 보완할 수 있는 학습 방향과 글로벌 네트워크 진출 팁을 함께 제공합니다.",
-    step1_title: "1단계: 핵심 역량",
-    step1_desc: "기존 키워드를 선택하거나 직접 입력해주세요. (5개 선택)",
+    hero_title: "커리어 나침반: Pivot",
+    hero_desc: "답답한 어제에서 설레는 내일로, 당신만의 커리어 루트를 찾으세요.",
+    vp1_title: "정교한 역량 연결",
+    vp1_desc: "단순한 매칭을 넘어, 당신의 소중한 성과 데이터를 기반으로 실무에서 빛날 수 있는 최적의 루트를 발견합니다.",
+    vp2_title: "글로벌 시장의 흐름",
+    vp2_desc: "전 세계 주요 비즈니스 거점의 데이터를 세밀하게 분석하여, 당신의 가능성이 가장 높게 평가받을 산업군을 안내합니다.",
+    vp3_title: "따뜻한 커리어 가이드",
+    vp3_desc: "나침반 탐색 결과에 맞추어, 더 나은 내일을 위해 보완하면 좋을 역량과 글로벌 진출을 위한 진심 어린 팁을 제안합니다.",
+    step1_title: "1단계: 나만의 핵심 역량",
+    step1_desc: "지금까지 쌓아온 소중한 역량 키워드를 선택해주세요. (5개 선택)",
     skill_js: "JavaScript",
     skill_python: "Python",
     skill_pm: "프로젝트 관리",
@@ -46,8 +46,8 @@ const translations = {
     next_step: "다음 단계로",
     selected_count: "/5",
     prev_step: "이전",
-    step2_title: "2단계: 관심 산업군",
-    step2_desc: "분석을 희망하는 타겟 산업군을 선택하세요.",
+    step2_title: "2단계: 새로운 도전 산업군",
+    step2_desc: "당신의 잠재력을 펼치고 싶은 타겟 산업군을 선택하세요.",
     industry_placeholder: "산업군 선택",
     ind_it: "IT / 소프트웨어",
     ind_finance: "금융 / 핀테크",
@@ -58,16 +58,16 @@ const translations = {
     ind_creative: "크리에이티브",
     ind_ecosocial: "친환경 / 소셜",
     ind_educounsel: "전문 상담 / 교육",
-    step3_title: "3단계: 주요 성과",
-    step3_desc: "AI가 당신의 경험에서 '전이 가능한 기술'을 추출합니다.",
+    step3_title: "3단계: 반짝이는 성과",
+    step3_desc: "당신의 소중한 경험 속에서 다른 직무에서도 빛날 '전이 가능한 기술'을 세밀하게 추출합니다.",
     perf_placeholder: "예: '호텔 파티시에로서 섬세한 레시피 기획과 시각적 미감을 강조한 디저트를 제작함'",
-    step4_title: "4단계: 업무 환경",
-    step4_desc: "가장 선호하는 근무 장소를 선택해주세요.",
+    step4_title: "4단계: 원하는 업무 환경",
+    step4_desc: "당신이 가장 몰입할 수 있는 근무 장소를 선택해주세요.",
     work_remote: "원격 근무 (Remote)",
     work_hybrid: "하이브리드 (Hybrid)",
     work_office: "오피스 출근 (Office)",
-    step5_title: "5단계: 직업적 가치관",
-    step5_desc: "당신을 가장 행복하게 만드는 가치를 선택해주세요.",
+    step5_title: "5단계: 커리어의 지향점",
+    step5_desc: "일을 통해 당신을 가장 행복하게 만드는 가치를 선택해주세요.",
     val_autonomy: "자율성",
     val_a1: "스스로 결정",
     val_a2: "매뉴얼 중심",
@@ -80,22 +80,22 @@ const translations = {
     val_source: "성취원천",
     val_o1: "문제 해결",
     val_o2: "시각적 완성도",
-    find_jobs: "분석 시작하기",
-    analyzing: "커리어 피벗 경로 분석 중...",
-    error_msg: "데이터를 불러오지 못했습니다. 다시 시도해주세요.",
-    result_title: "커리어 피벗 분석 결과",
-    retry: "다시 하기",
-    pivot_reason: "당신의 기존 강점인 [EXTRACTED] 역량이 이 직무의 핵심 성공 요인과 일치합니다."
+    find_jobs: "루트 발견하기",
+    analyzing: "당신만을 위한 커리어 루트를 찾는 중입니다...",
+    error_msg: "데이터를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.",
+    result_title: "나침반 탐색 결과",
+    retry: "다시 탐색하기",
+    pivot_reason: "당신의 소중한 강점인 [EXTRACTED] 역량이 이 직무의 핵심 성공 요인과 조화롭게 연결됩니다."
   },
   en: {
-    hero_title: "Verify Your Global Career Value",
-    hero_desc: "Our AI-based analysis system matches you with optimal global roles based on your core competencies and achievements.",
-    vp1_title: "Precise Competency Matching",
-    vp1_desc: "Beyond simple keyword matching, we suggest roles that are immediately applicable in practice based on your actual performance data.",
+    hero_title: "Career Compass: Pivot",
+    hero_desc: "From a frustrating yesterday to an exciting tomorrow, find your own career route.",
+    vp1_title: "Precise Competency Connection",
+    vp1_desc: "Beyond simple matching, we discover the optimal route for you to shine based on your valuable performance data.",
     vp2_title: "Global Market Trends",
-    vp2_desc: "We provide information on the most promising industries by analyzing real-time hiring data from major global IT and business hubs.",
-    vp3_title: "Customized Career Guide",
-    vp3_desc: "Based on the analysis results, we provide learning directions to supplement lacking skills and tips for entering global networks.",
+    vp2_desc: "By analyzing data from major global business hubs, we guide you to industries where your potential is most valued.",
+    vp3_title: "Warm Career Guide",
+    vp3_desc: "Based on the compass navigation results, we suggest skills to supplement for a better tomorrow and sincere tips for global entry.",
     step1_title: "Step 1: Core Competencies",
     step1_desc: "Select existing keywords or enter them directly. (Select 5)",
     skill_js: "JavaScript",
@@ -145,12 +145,12 @@ const translations = {
     val_source: "Source of Achievement",
     val_o1: "Problem Solving",
     val_o2: "Visual Perfection",
-    find_jobs: "Start Analysis",
-    analyzing: "Analyzing career pivot paths...",
-    error_msg: "Failed to load data. Please try again.",
-    result_title: "Career Pivot Analysis Results",
-    retry: "Retry",
-    pivot_reason: "Your existing strength in [EXTRACTED] matches the core success factors of this role."
+    find_jobs: "Discover Routes",
+    analyzing: "Finding your unique career route...",
+    error_msg: "Failed to load data. Please try again soon.",
+    result_title: "Compass Navigation Results",
+    retry: "Search Again",
+    pivot_reason: "Your valuable strength in [EXTRACTED] connects harmoniously with the core success factors of this role."
   }
 };
 
@@ -370,15 +370,15 @@ function showPivotResults(lang, skills, formData) {
     // 논리적 추천 근거 생성 로직
     if (matchedPivotSkill) {
       matchReason = isKor 
-        ? `과거 경험에서 증명된 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 핵심 성공 요인과 95% 이상 일치합니다. 이는 성공적인 커리어 피벗의 강력한 지표입니다.`
-        : `Your proven <b>'${matchedPivotSkill}'</b> skill is a direct match (95%+) for the core success factors of a ${job.title}, indicating a strong career pivot potential.`;
+        ? `과거 경험에서 증명된 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 핵심 성공 요인과 깊이 맞닿아 있습니다. 이는 새로운 시작을 위한 견고한 토대가 될 것입니다.`
+        : `Your proven <b>'${matchedPivotSkill}'</b> skill aligns deeply with the core success factors of a ${job.title}, providing a solid foundation for your new journey.`;
     } else if (job.industry === industry) {
       matchReason = isKor 
-        ? `선택하신 <b>'${translations.ko['ind_' + industry.toLowerCase()] || industry}'</b> 분야에 대한 높은 관심과 보유하신 <b>'${skills[0]}'</b> 역량을 결합하여 새로운 가치를 창출할 수 있는 실무 중심 포지션입니다.`
+        ? `선택하신 <b>'${translations.ko['ind_' + industry.toLowerCase()] || industry}'</b> 분야에 대한 따뜻한 관심과 보유하신 <b>'${skills[0]}'</b> 역량을 결합하여 새로운 가치를 창출할 수 있는 실무 중심 포지션입니다.`
         : `This role allows you to combine your interest in <b>'${translations.en['ind_' + industry.toLowerCase()] || industry}'</b> with your <b>'${skills[0]}'</b> skill to create new value.`;
     } else {
       matchReason = isKor
-        ? `당신이 중시하는 <b>'${translations.ko['val_' + Object.keys(userValues).find(k => userValues[k] === job.v[k.replace('v_', '')])] || '맞춤'}'</b> 가치가 실현되는 환경으로, 심리적 안정감과 성취감을 동시에 얻을 수 있습니다.`
+        ? `당신이 소중히 여기는 <b>'${translations.ko['val_' + Object.keys(userValues).find(k => userValues[k] === job.v[k.replace('v_', '')])] || '맞춤'}'</b> 가치가 조화롭게 실현되는 환경으로, 심리적 안정감과 성취감을 동시에 얻으실 수 있습니다.`
         : `This environment realizes the <b>'${translations.en['val_' + Object.keys(userValues).find(k => userValues[k] === job.v[k.replace('v_', '')])] || 'customized'}'</b> value you prioritize.`;
     }
 
@@ -412,7 +412,7 @@ function showPivotResults(lang, skills, formData) {
 
   resultsDiv.innerHTML = finalResults.map((job, i) => `
     <div class="job-card" style="animation-delay: ${i * 0.1}s; border: ${job.pivotSkill ? '2px solid #1a202c' : '1px solid var(--border-color)'}">
-      ${job.pivotSkill ? `<div style="background:#1a202c; color:white; font-size:0.65rem; padding:2px 8px; position:absolute; top:-10px; left:15px; border-radius:4px; font-weight:700;">커리어 피벗 추천</div>` : ''}
+      ${job.pivotSkill ? `<div style="background:#1a202c; color:white; font-size:0.65rem; padding:2px 8px; position:absolute; top:-10px; left:15px; border-radius:4px; font-weight:700;">최적의 루트 발견</div>` : ''}
       <div class="job-card-header">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div class="job-title">${job.title}</div>
@@ -425,7 +425,7 @@ function showPivotResults(lang, skills, formData) {
           ${job.tags.map(t => `<span class="comp-tag"># ${t}</span>`).join('')}
         </div>
         <div class="match-reason-box">
-          <span class="reason-label">💡 분석 리포트</span>
+          <span class="reason-label">💡 나침반 탐색 리포트</span>
           <p class="reason-text">${job.matchReason}</p>
         </div>
       </div>
