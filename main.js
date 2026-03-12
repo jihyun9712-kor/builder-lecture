@@ -33,6 +33,19 @@ const translations = {
     vp3_desc: "나침반 탐색 결과에 맞추어, 더 나은 내일을 위해 보완하면 좋을 역량과 글로벌 진출을 위한 진심 어린 팁을 제안합니다.",
     step1_title: "1단계: 나만의 핵심 역량",
     step1_desc: "지금까지 쌓아온 소중한 역량 키워드를 선택해주세요. (5개 선택)",
+    skill_premium_service: "프리미엄 서비스",
+    skill_cust_psych: "고객 심리 분석",
+    skill_menu_plan: "메뉴 기획",
+    skill_space_op: "공간 운영",
+    skill_comm_mgmt: "커뮤니티 관리",
+    skill_brand_story: "브랜딩 스토리",
+    skill_sns_mgmt: "SNS 채널 운영",
+    skill_digi_goods: "디지털 굿즈 기획",
+    skill_pers_brand: "퍼스널 브랜딩",
+    skill_curr_design: "커리큘럼 설계",
+    skill_online_lec: "온라인 강의 기획",
+    skill_remote_counsel: "비대면 상담",
+    skill_coaching: "코칭",
     skill_js: "JavaScript",
     skill_python: "Python",
     skill_pm: "프로젝트 관리",
@@ -58,9 +71,14 @@ const translations = {
     ind_creative: "크리에이티브",
     ind_ecosocial: "친환경 / 소셜",
     ind_educounsel: "전문 상담 / 교육",
-    step3_title: "3단계: 반짝이는 성과",
-    step3_desc: "당신의 소중한 경험 속에서 다른 직무에서도 빛날 '전이 가능한 기술'을 세밀하게 추출합니다.",
-    perf_placeholder: "예: '호텔 파티시에로서 섬세한 레시피 기획과 시각적 미감을 강조한 디저트를 제작함'",
+    step3_title: "3단계: 전이 가능한 기술",
+    step3_desc: "당신의 소중한 경험 속에서 다른 직무에서도 빛날 '전이 가능한 기술'을 선택하세요.",
+    pivot_delicate: "섬세한 미감",
+    pivot_plan: "공정 기획력",
+    pivot_comm: "고객 공감 능력",
+    pivot_analysis: "데이터 기반 분석",
+    pivot_eco: "친환경 가치",
+    pivot_creative: "창의적 문제 해결",
     step4_title: "4단계: 원하는 업무 환경",
     step4_desc: "당신이 가장 몰입할 수 있는 근무 장소를 선택해주세요.",
     work_remote: "원격 근무 (Remote)",
@@ -98,6 +116,19 @@ const translations = {
     vp3_desc: "Based on the compass navigation results, we suggest skills to supplement for a better tomorrow and sincere tips for global entry.",
     step1_title: "Step 1: Core Competencies",
     step1_desc: "Select existing keywords or enter them directly. (Select 5)",
+    skill_premium_service: "Premium Service",
+    skill_cust_psych: "Customer Psychology",
+    skill_menu_plan: "Menu Planning",
+    skill_space_op: "Space Operations",
+    skill_comm_mgmt: "Community Management",
+    skill_brand_story: "Branding Story",
+    skill_sns_mgmt: "SNS Management",
+    skill_digi_goods: "Digital Goods",
+    skill_pers_brand: "Personal Branding",
+    skill_curr_design: "Curriculum Design",
+    skill_online_lec: "Online Lecture",
+    skill_remote_counsel: "Remote Counseling",
+    skill_coaching: "Coaching",
     skill_js: "JavaScript",
     skill_python: "Python",
     skill_pm: "Project Management",
@@ -123,9 +154,14 @@ const translations = {
     ind_creative: "Creative",
     ind_ecosocial: "Eco / Social",
     ind_educounsel: "Professional / Edu",
-    step3_title: "Step 3: Key Achievements",
-    step3_desc: "AI extracts 'transferable skills' from your experience.",
-    perf_placeholder: "E.g., 'As a hotel pastry chef, I created desserts emphasizing delicate recipe planning and visual aesthetics.'",
+    step3_title: "Step 3: Transferable Skills",
+    step3_desc: "Select 'transferable skills' that will shine in other jobs.",
+    pivot_delicate: "Delicate Aesthetic",
+    pivot_plan: "Process Planning",
+    pivot_comm: "Customer Empathy",
+    pivot_analysis: "Data-driven Analysis",
+    pivot_eco: "Eco-friendly Value",
+    pivot_creative: "Creative Problem Solving",
     step4_title: "Step 4: Work Environment",
     step4_desc: "Please select your preferred work location.",
     work_remote: "Remote",
@@ -210,6 +246,9 @@ function updateSteps() {
     industries.forEach(i => i.addEventListener('change', checkIndustry));
     checkIndustry();
   }
+  if (currentStep === 3) {
+    if (nextBtn) nextBtn.disabled = selectedTransferableSkills.length === 0;
+  }
   updateUI();
 }
 
@@ -218,10 +257,11 @@ prevBtns.forEach(btn => btn.addEventListener('click', () => { if (currentStep > 
 
 const skillContainer = document.getElementById('skill-selection');
 const customSkillInput = document.getElementById('custom-skill-input');
-const skillsInputHidden = document.getElementById('selected-skills-input');
+const transferableSkillContainer = document.getElementById('transferable-skill-selection');
 let selectedSkills = [];
+let selectedTransferableSkills = [];
 
-function attachChipEvent(chip) {
+function attachSkillChipEvent(chip) {
   chip.addEventListener('click', () => {
     const val = chip.dataset.value;
     if (selectedSkills.includes(val)) {
@@ -234,7 +274,23 @@ function attachChipEvent(chip) {
     updateSteps();
   });
 }
-document.querySelectorAll('.keyword-chip').forEach(attachChipEvent);
+
+function attachTransferableSkillChipEvent(chip) {
+  chip.addEventListener('click', () => {
+    const val = chip.dataset.value;
+    if (selectedTransferableSkills.includes(val)) {
+      selectedTransferableSkills = selectedTransferableSkills.filter(s => s !== val);
+      chip.classList.remove('selected');
+    } else {
+      selectedTransferableSkills.push(val);
+      chip.classList.add('selected');
+    }
+    updateSteps();
+  });
+}
+
+document.querySelectorAll('#skill-selection .keyword-chip').forEach(attachSkillChipEvent);
+document.querySelectorAll('#transferable-skill-selection .keyword-chip').forEach(attachTransferableSkillChipEvent);
 
 customSkillInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
@@ -246,21 +302,13 @@ customSkillInput.addEventListener('keypress', (e) => {
       chip.dataset.value = val;
       chip.textContent = val;
       skillContainer.appendChild(chip);
-      attachChipEvent(chip);
+      attachSkillChipEvent(chip);
       selectedSkills.push(val);
       updateSteps();
     }
     customSkillInput.value = '';
   }
 });
-
-const perfTextarea = document.getElementById('performance');
-const charCount = document.getElementById('char-count');
-if (perfTextarea) {
-  perfTextarea.addEventListener('input', (e) => {
-    charCount.textContent = e.target.value.length;
-  });
-}
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -275,20 +323,13 @@ form.addEventListener('submit', async (e) => {
   document.getElementById('result-container').style.display = 'block';
   
   const formData = new FormData(form);
-  showPivotResults(currentLang, selectedSkills, formData);
+  showPivotResults(currentLang, selectedSkills, selectedTransferableSkills, formData);
 });
 
-function showPivotResults(lang, skills, formData) {
+function showPivotResults(lang, skills, transferableSkills, formData) {
   const resultsDiv = document.getElementById('job-results');
   const isKor = lang === 'ko';
-  const performanceText = formData.get('performance') || "";
   const industry = formData.get('industry');
-
-  // 1. 성과 문구에서 전이 기술(Transferable Skills) 추출
-  const extractedSkills = [];
-  Object.keys(pivotMapping).forEach(keyword => {
-    if (performanceText.includes(keyword)) extractedSkills.push(keyword);
-  });
 
   const userValues = {
     location: formData.get('loc_freedom'),
@@ -343,7 +384,7 @@ function showPivotResults(lang, skills, formData) {
     let score = 0;
     
     // 산업군 가점
-    if (job.industry === industry) score += 2.0; // 산업군 매칭 가중치 상향
+    if (job.industry === industry) score += 2.0; 
     if (job.industry === "General") score += 0.5;
 
     // 가치관 매칭 가점 (각 0.5점)
@@ -352,25 +393,23 @@ function showPivotResults(lang, skills, formData) {
     if (job.v.reward === userValues.reward) score += 0.5;
     if (job.v.source === userValues.source) score += 0.5;
 
-    // 재택근무 가점 (하드 필터링 대신 가점 부여)
+    // 재택근무 가점
     if (job.v.location === userValues.location) {
       if (userValues.location === 'remote') {
         const isTechJob = /AI|소프트웨어|개발|Software|Develop/.test(job.title) || job.tags.some(t => /AI|소프트웨어|개발|Software|Develop/.test(t));
-        // 전통적 직종의 리모트 워크 형태에 더 높은 우선순위 부여 (+1.5)
-        // 일반 IT/테크 재택근무는 기존 가점 유지 (+0.8)
         score += isTechJob ? 0.8 : 1.5;
       } else {
         score += 0.8;
       }
     }
 
-    // 전이 기술 가점 (추출된 기술당 1.5점 - 커리어 피벗의 핵심)
+    // 전이 기술 가점 (선택된 기술 매칭 시 점수 부여)
     let matchedPivotSkill = "";
     let matchReason = "";
 
-    extractedSkills.forEach(sk => {
-      if (pivotMapping[sk].includes(job.title) || pivotMapping[sk].some(val => job.tags.includes(val))) {
-        score += 1.5;
+    transferableSkills.forEach(sk => {
+      if (pivotMapping[sk] && (pivotMapping[sk].includes(job.title) || pivotMapping[sk].some(val => job.tags.includes(val)))) {
+        score += 2.5; // 직접 선택한 전이 기술에 대해 높은 가중치 부여
         matchedPivotSkill = sk;
       }
     });
@@ -378,36 +417,34 @@ function showPivotResults(lang, skills, formData) {
     // 논리적 추천 근거 생성 로직
     if (matchedPivotSkill) {
       matchReason = isKor 
-        ? `과거 경험에서 증명된 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 핵심 성공 요인과 깊이 맞닿아 있습니다. 이는 새로운 시작을 위한 견고한 토대가 될 것입니다.`
-        : `Your proven <b>'${matchedPivotSkill}'</b> skill aligns deeply with the core success factors of a ${job.title}, providing a solid foundation for your new journey.`;
+        ? `당신이 보유한 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 성공을 위한 가장 강력한 엔진입니다.`
+        : `Your <b>'${matchedPivotSkill}'</b> skill is the most powerful engine for success as a ${job.title}.`;
     } else if (job.industry === industry) {
       matchReason = isKor 
-        ? `선택하신 <b>'${translations.ko['ind_' + industry.toLowerCase()] || industry}'</b> 분야에 대한 따뜻한 관심과 보유하신 <b>'${skills[0]}'</b> 역량을 결합하여 새로운 가치를 창출할 수 있는 실무 중심 포지션입니다.`
-        : `This role allows you to combine your interest in <b>'${translations.en['ind_' + industry.toLowerCase()] || industry}'</b> with your <b>'${skills[0]}'</b> skill to create new value.`;
+        ? `선택하신 <b>'${translations.ko['ind_' + industry.toLowerCase()] || industry}'</b> 분야에 대한 전문성과 보유 역량을 결합하여 새로운 가치를 창출할 수 있는 포지션입니다.`
+        : `This role allows you to create new value by combining your expertise in <b>'${translations.en['ind_' + industry.toLowerCase()] || industry}'</b> with your skills.`;
     } else {
       matchReason = isKor
-        ? `당신이 소중히 여기는 <b>'${translations.ko['val_' + Object.keys(userValues).find(k => userValues[k] === job.v[k.replace('v_', '')])] || '맞춤'}'</b> 가치가 조화롭게 실현되는 환경으로, 심리적 안정감과 성취감을 동시에 얻으실 수 있습니다.`
-        : `This environment realizes the <b>'${translations.en['val_' + Object.keys(userValues).find(k => userValues[k] === job.v[k.replace('v_', '')])] || 'customized'}'</b> value you prioritize.`;
+        ? `당신이 소중히 여기는 직업 가치가 조화롭게 실현되는 환경으로, 심리적 안정감과 성취감을 동시에 얻으실 수 있습니다.`
+        : `This environment realizes the professional values you prioritize, offering both stability and achievement.`;
     }
 
     return { ...job, score, pivotSkill: matchedPivotSkill, matchReason };
   });
 
-  // 3. 중복 제거 및 점수 순 정렬 (ID 기반으로 고유성 보장)
+  // 3. 중복 제거 및 점수 순 정렬
   const uniqueJobs = Array.from(new Map(scoredJobs.map(item => [item.id, item])).values());
   const sortedJobs = uniqueJobs.sort((a, b) => b.score - a.score);
 
-  // 4. IT/AI 편중 방지 로직 (최대 20% 제한)
+  // 4. IT/AI 편중 방지 로직
   const maxResults = 6;
-  const maxTechAllowed = Math.floor(maxResults * 0.2) || 1; // 6개 중 20%면 1.2개 -> 최대 1개
+  const maxTechAllowed = Math.floor(maxResults * 0.2) || 1; 
   let currentTechCount = 0;
   const finalResults = [];
 
   for (const job of sortedJobs) {
     if (finalResults.length >= maxResults) break;
-    
     const isTechJob = /AI|소프트웨어|개발|Software|Develop/.test(job.title) || job.tags.some(t => /AI|소프트웨어|개발|Software|Develop/.test(t));
-    
     if (isTechJob) {
       if (currentTechCount < maxTechAllowed) {
         finalResults.push(job);

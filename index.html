@@ -55,15 +55,26 @@
           <h2 data-i18n="step1_title">1단계: 핵심 역량</h2>
           <p class="step-desc" data-i18n="step1_desc">기존 키워드를 선택하거나 직접 입력해주세요. (5개 선택)</p>
           <div class="keyword-grid" id="skill-selection">
-            <div class="keyword-chip" data-value="JavaScript" data-i18n="skill_js">JavaScript</div>
-            <div class="keyword-chip" data-value="Python" data-i18n="skill_python">Python</div>
-            <div class="keyword-chip" data-value="Project Management" data-i18n="skill_pm">Project Management</div>
-            <div class="keyword-chip" data-value="Data Analysis" data-i18n="skill_da">Data Analysis</div>
-            <div class="keyword-chip" data-value="UI/UX Design" data-i18n="skill_uiux">UI/UX Design</div>
-            <div class="keyword-chip" data-value="Digital Marketing" data-i18n="skill_dm">Digital Marketing</div>
-            <div class="keyword-chip" data-value="SQL" data-i18n="skill_sql">SQL</div>
-            <div class="keyword-chip" data-value="Problem Solving" data-i18n="skill_ps">Problem Solving</div>
-            <div class="keyword-chip" data-value="Agile" data-i18n="skill_agile">Agile</div>
+            <!-- [Service/Operations] -->
+            <div class="keyword-chip" data-value="Premium Service" data-i18n="skill_premium_service">프리미엄 서비스</div>
+            <div class="keyword-chip" data-value="Customer Psychology" data-i18n="skill_cust_psych">고객 심리 분석</div>
+            <div class="keyword-chip" data-value="Menu Planning" data-i18n="skill_menu_plan">메뉴 기획</div>
+            <div class="keyword-chip" data-value="Space Operations" data-i18n="skill_space_op">공간 운영</div>
+            <div class="keyword-chip" data-value="Community Management" data-i18n="skill_comm_mgmt">커뮤니티 관리</div>
+            <!-- [Content/Marketing] -->
+            <div class="keyword-chip" data-value="Branding Story" data-i18n="skill_brand_story">브랜딩 스토리</div>
+            <div class="keyword-chip" data-value="SNS Management" data-i18n="skill_sns_mgmt">SNS 채널 운영</div>
+            <div class="keyword-chip" data-value="Digital Goods" data-i18n="skill_digi_goods">디지털 굿즈 기획</div>
+            <div class="keyword-chip" data-value="Personal Branding" data-i18n="skill_pers_brand">퍼스널 브랜딩</div>
+            <!-- [Education/Counseling] -->
+            <div class="keyword-chip" data-value="Curriculum Design" data-i18n="skill_curr_design">커리큘럼 설계</div>
+            <div class="keyword-chip" data-value="Online Lecture" data-i18n="skill_online_lec">온라인 강의 기획</div>
+            <div class="keyword-chip" data-value="Remote Counseling" data-i18n="skill_remote_counsel">비대면 상담</div>
+            <div class="keyword-chip" data-value="Coaching" data-i18n="skill_coaching">코칭</div>
+            <!-- Existing ones -->
+            <div class="keyword-chip" data-value="Project Management" data-i18n="skill_pm">프로젝트 관리</div>
+            <div class="keyword-chip" data-value="Data Analysis" data-i18n="skill_da">데이터 분석</div>
+            <div class="keyword-chip" data-value="UI/UX Design" data-i18n="skill_uiux">UI/UX 디자인</div>
           </div>
           <div class="custom-input-wrapper">
             <input type="text" id="custom-skill-input" data-i18n-placeholder="custom_placeholder" placeholder="직접 입력 후 Enter">
@@ -147,14 +158,19 @@
           </div>
         </div>
 
-        <!-- Step 3: Achievement -->
+        <!-- Step 3: Transferable Skills -->
         <div class="form-step" id="step-3">
-          <h2 data-i18n="step3_title">3단계: 주요 성과</h2>
-          <p class="step-desc" data-i18n="step3_desc">AI가 직무 레벨을 판단할 수 있도록 성과를 적어주세요.</p>
-          <div class="textarea-wrapper">
-            <textarea id="performance" name="performance" data-i18n-placeholder="perf_placeholder" placeholder="가장 성과가 좋았던 경험을 한 문장으로 적어주세요."></textarea>
-            <div class="char-counter"><span id="char-count">0</span>/200</div>
+          <h2 data-i18n="step3_title">3단계: 전이 가능한 기술</h2>
+          <p class="step-desc" data-i18n="step3_desc">당신의 소중한 경험 속에서 다른 직무에서도 빛날 '전이 가능한 기술'을 선택하세요.</p>
+          <div class="keyword-grid" id="transferable-skill-selection">
+            <div class="keyword-chip" data-value="섬세함" data-i18n="pivot_delicate">섬세한 미감</div>
+            <div class="keyword-chip" data-value="기획" data-i18n="pivot_plan">공정 기획력</div>
+            <div class="keyword-chip" data-value="소통" data-i18n="pivot_comm">고객 공감 능력</div>
+            <div class="keyword-chip" data-value="분석" data-i18n="pivot_analysis">데이터 기반 분석</div>
+            <div class="keyword-chip" data-value="친환경" data-i18n="pivot_eco">친환경 가치</div>
+            <div class="keyword-chip" data-value="창의" data-i18n="pivot_creative">창의적 문제 해결</div>
           </div>
+          <input type="hidden" id="selected-transferable-skills-input" name="transferable_skills" required>
           <div class="btn-group">
             <button type="button" class="submit-btn prev-btn secondary" data-i18n="prev_step">이전</button>
             <button type="button" class="submit-btn next-btn" data-i18n="next_step">다음 단계로</button>
