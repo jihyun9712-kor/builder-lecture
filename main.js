@@ -437,10 +437,33 @@ function showPivotResults(lang, skills, formData) {
           <span class="reason-label">💡 나침반 탐색 리포트</span>
           <p class="reason-text">${job.matchReason}</p>
         </div>
+
+        <div class="roadmap-container">
+          <button class="roadmap-toggle-btn" onclick="toggleRoadmap(this)">
+            <span>📍 ${isKor ? '준비 로드맵 보기' : 'View Roadmap'}</span>
+            <span class="arrow">▾</span>
+          </button>
+          <div class="roadmap-content">
+            <div class="roadmap-step"><span class="step-label">[Step 1]</span> ${isKor ? '기초 강의: 직무 핵심 역량 및 시장 이해' : 'Basic Lecture: Core Competencies & Market Understanding'}</div>
+            <div class="roadmap-step"><span class="step-label">[Step 2]</span> ${isKor ? '실전 준비: 포트폴리오 구성 및 전이 기술 증명' : 'Practical Prep: Portfolio & Transferable Skill Proof'}</div>
+            <div class="roadmap-step"><span class="step-label">[Step 3]</span> ${isKor ? '수익 창출: 커리어 피벗 성공 및 전문성 강화' : 'Revenue: Career Pivot Success & Expert Growth'}</div>
+          </div>
+        </div>
       </div>
     </div>
   `).join('');
 }
+
+window.toggleRoadmap = function(btn) {
+  const content = btn.nextElementSibling;
+  const arrow = btn.querySelector('.arrow');
+  content.classList.toggle('active');
+  if (content.classList.contains('active')) {
+    arrow.textContent = '▴';
+  } else {
+    arrow.textContent = '▾';
+  }
+};
 
 updateUI();
 updateSteps();
