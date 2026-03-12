@@ -321,12 +321,17 @@ customSkillInput.addEventListener('keypress', (e) => {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const submitBtn = form.querySelector('button[type="submit"]');
-  const t = translations[currentLang];
   submitBtn.disabled = true;
-  submitBtn.textContent = t.analyzing;
-
-  await new Promise(r => setTimeout(r, 1500));
   
+  const loadingTexts = currentLang === 'ko' 
+    ? ['역량 분석 중...', '글로벌 루트 탐색 중...', '최적의 루트 발견!']
+    : ['Analyzing competencies...', 'Searching global routes...', 'Optimal route discovered!'];
+  
+  for (const text of loadingTexts) {
+    submitBtn.textContent = text;
+    await new Promise(r => setTimeout(r, 800));
+  }
+
   document.getElementById('step-form-container').style.display = 'none';
   document.getElementById('result-container').style.display = 'block';
   
@@ -423,22 +428,29 @@ function showPivotResults(lang, skills, transferableSkills, formData) {
       }
     });
 
-    // 논리적 추천 근거 생성 로직
+    // 노마드 지수 계산
+    let nomadStars = 1;
+    if (job.v.location === 'remote') nomadStars = 5;
+    else if (job.v.location === 'hybrid') nomadStars = 3;
+    else nomadStars = 2;
+
+    // 논리적 추천 근거 생성 로직 (개인화 볼드 처리)
     if (matchedPivotSkill) {
       matchReason = isKor 
         ? `당신이 보유한 <b>'${matchedPivotSkill}'</b> 역량은 ${job.title} 직무의 성공을 위한 가장 강력한 엔진입니다.`
         : `Your <b>'${matchedPivotSkill}'</b> skill is the most powerful engine for success as a ${job.title}.`;
     } else if (job.industry === industry) {
+      const displayInd = translations[lang]['ind_' + industry.toLowerCase().replace('/', '')] || industry;
       matchReason = isKor 
-        ? `선택하신 <b>'${translations.ko['ind_' + industry.toLowerCase()] || industry}'</b> 분야에 대한 전문성과 보유 역량을 결합하여 새로운 가치를 창출할 수 있는 포지션입니다.`
-        : `This role allows you to create new value by combining your expertise in <b>'${translations.en['ind_' + industry.toLowerCase()] || industry}'</b> with your skills.`;
+        ? `선택하신 <b>'${displayInd}'</b> 분야에 대한 전문성과 보유 역량을 결합하여 새로운 가치를 창출할 수 있는 포지션입니다.`
+        : `This role allows you to create new value by combining your expertise in <b>'${displayInd}'</b> with your skills.`;
     } else {
       matchReason = isKor
         ? `당신이 소중히 여기는 직업 가치가 조화롭게 실현되는 환경으로, 심리적 안정감과 성취감을 동시에 얻으실 수 있습니다.`
         : `This environment realizes the professional values you prioritize, offering both stability and achievement.`;
     }
 
-    return { ...job, score, pivotSkill: matchedPivotSkill, matchReason };
+    return { ...job, score, pivotSkill: matchedPivotSkill, matchReason, nomadStars };
   });
 
   // 3. 중복 제거 및 점수 순 정렬
@@ -467,6 +479,10 @@ function showPivotResults(lang, skills, transferableSkills, formData) {
   resultsDiv.innerHTML = finalResults.map((job, i) => `
     <div class="job-card" style="animation-delay: ${i * 0.1}s; border: ${job.pivotSkill ? '2px solid #1a202c' : '1px solid var(--border-color)'}">
       ${job.pivotSkill ? `<div style="background:#1a202c; color:white; font-size:0.65rem; padding:2px 8px; position:absolute; top:-10px; left:15px; border-radius:4px; font-weight:700;">최적의 루트 발견</div>` : ''}
+      <div class="nomad-index">
+        <span class="nomad-label">${isKor ? '장소 독립 지수' : 'Nomad Index'}</span>
+        <span class="nomad-stars">${'★'.repeat(job.nomadStars)}${'☆'.repeat(5 - job.nomadStars)}</span>
+      </div>
       <div class="job-card-header">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div>
