@@ -552,3 +552,49 @@ body.dark-mode .mini-btn {
   color: var(--accent-color);
   white-space: nowrap;
 }
+
+/* 로드맵 애니메이션 및 노출 스타일 */
+.roadmap-content {
+    display: none; /* 기본적으로 숨김 */
+    padding: 15px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px dashed var(--border-color);
+}
+
+.roadmap-content.active {
+    display: block !important; /* 클릭 시 나타남 */
+    animation: fadeIn 0.3s ease-out;
+}
+
+.roadmap-toggle-btn {
+    width: 100%;
+    background: none;
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+    margin-top: 15px;
+}
+
+.roadmap-toggle-btn:hover {
+    background: var(--bg-secondary);
+}
+
+.roadmap-step {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.step-label {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-right: 5px;
+}
