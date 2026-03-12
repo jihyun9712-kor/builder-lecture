@@ -6,18 +6,18 @@ let currentLang = 'ko';
 
 // --- 전이 가능한 기술(Transferable Skills) 매핑 테이블 ---
 const pivotMapping = {
-  "섬세함": ["UX Designer", "Quality Assurance", "Precision Medicine", "Premium Hospitality Manager", "Space Curator"],
-  "기획": ["Product Manager", "Content Producer", "Strategy Consultant", "Senior Care Planner", "Edutech Content Planner"],
-  "미감": ["Brand Director", "UI Designer", "Virtual Human Producer", "Space Curator", "Digital Stationery Designer"],
-  "소통": ["Community Manager", "Client Relations", "Sales Lead", "Non-face-to-face Counselor", "Personal Branding Director"],
-  "분석": ["Data Analyst", "Risk Analyst", "Market Strategist", "ESG Consultant"],
-  "관리": ["Operations Manager", "Project Manager", "DAO Operator", "Vegan Business Operator"],
-  "창의": ["Prompt Engineer", "Creative Director", "Innovation Lead", "Local Branding Specialist", "Virtual Space Designer"],
+  "섬세함": ["UX Designer", "Quality Assurance", "Precision Medicine", "Premium Hospitality Manager", "Space Curator", "Wellness Content Planner", "Untact Psychological Counselor"],
+  "기획": ["Product Manager", "Content Producer", "Strategy Consultant", "Senior Care Planner", "Edutech Content Planner", "Local Branding Director", "Wellness Content Planner", "Online Baking Class Operator", "Edutech Curriculum Designer", "Personal Branding Consultant"],
+  "미감": ["Brand Director", "UI Designer", "Virtual Human Producer", "Space Curator", "Digital Stationery Designer", "Local Branding Director", "Online Baking Class Operator", "Personal Branding Consultant"],
+  "소통": ["Community Manager", "Client Relations", "Sales Lead", "Non-face-to-face Counselor", "Personal Branding Director", "Untact Psychological Counselor", "Personal Branding Consultant"],
+  "분석": ["Data Analyst", "Risk Analyst", "Market Strategist", "ESG Consultant", "Edutech Curriculum Designer"],
+  "관리": ["Operations Manager", "Project Manager", "DAO Operator", "Vegan Business Operator", "Online Baking Class Operator"],
+  "창의": ["Prompt Engineer", "Creative Director", "Innovation Lead", "Local Branding Specialist", "Virtual Space Designer", "Local Branding Director"],
   "친환경": ["Vegan Business Operator", "Upcycling Professional", "ESG Consultant"],
-  "로컬": ["Local Branding Specialist"],
+  "로컬": ["Local Branding Specialist", "Local Branding Director"],
   "디자인": ["Digital Stationery Designer", "Virtual Space Designer", "UX Designer"],
-  "심리": ["Non-face-to-face Counselor"],
-  "교육": ["Edutech Content Planner"],
+  "심리": ["Non-face-to-face Counselor", "Untact Psychological Counselor"],
+  "교육": ["Edutech Content Planner", "Online Baking Class Operator", "Edutech Curriculum Designer"],
   "실버": ["Senior Care Planner"]
 };
 
@@ -327,7 +327,15 @@ function showPivotResults(lang, skills, formData) {
     { id: 'prompt_eng', industry: "IT/Software", title: isKor ? "프롬프트 엔지니어" : "Prompt Engineer", tags: ["AI", "LLM"], v: { location: 'remote', autonomy: 'decide', social: 'solo', reward: 'high', source: 'solve' } },
     { id: 'dtx_ux', industry: "Healthcare", title: isKor ? "디지털 치료제 UX 디자이너" : "DTx UX Designer", tags: ["Health-tech", "Design"], v: { location: 'office', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
     { id: 'nomad_con', industry: "General", title: isKor ? "디지털 노마드 컨설턴트" : "Digital Nomad Consultant", tags: ["Remote", "Future Work"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'solve' } },
-    { id: 'dao_op', industry: "Finance", title: isKor ? "DAO 거버넌스 운영자" : "DAO Operator", tags: ["Web3", "Gov"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'solve' } }
+    { id: 'dao_op', industry: "Finance", title: isKor ? "DAO 거버넌스 운영자" : "DAO Operator", tags: ["Web3", "Gov"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'solve' } },
+
+    // New Roles
+    { id: 'cre_local_dir', industry: "Creative", title: isKor ? "로컬 브랜딩 디렉터" : "Local Branding Director", description: isKor ? "파티시에로서의 섬세한 미감과 기획력을 지역 브랜드의 고유한 가치와 연결하는 능력이 탁월합니다." : "Excellent ability to connect the delicate aesthetic and planning skills of a pastry chef with the unique values of local brands.", tags: ["Local", "Branding", "Creative"], v: { location: 'hybrid', autonomy: 'decide', social: 'team', reward: 'stable', source: 'visual' } },
+    { id: 'life_wellness', industry: "Lifestyle", title: isKor ? "웰니스 콘텐츠 기획자" : "Wellness Content Planner", description: isKor ? "디저트를 통해 행복을 전달하던 경험을 심신의 안정을 돕는 웰니스 콘텐츠 기획으로 전이할 수 있습니다." : "Can transfer the experience of delivering happiness through desserts into planning wellness content that helps physical and mental stability.", tags: ["Wellness", "Content", "Planning"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'stable', source: 'solve' } },
+    { id: 'cre_baking', industry: "Creative", title: isKor ? "온라인 베이킹 클래스 운영자" : "Online Baking Class Operator", description: isKor ? "다년간 쌓아온 전문 베이킹 기술과 레시피 설계 능력을 디지털 강의로 확장하여 새로운 가치를 창출합니다." : "Creates new value by expanding professional baking techniques and recipe design skills accumulated over years into digital lectures.", tags: ["E-commerce", "Education", "Baking"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'visual' } },
+    { id: 'edu_edutech_des', industry: "EduCounsel", title: isKor ? "에듀테크 커리큘럼 디자이너" : "Edutech Curriculum Designer", description: isKor ? "복잡한 레시피를 단계별 공정으로 구조화하던 분석력을 활용해 효율적인 학습 커리큘럼을 설계합니다." : "Designs efficient learning curricula using the analytical skills used to structure complex recipes into step-by-step processes.", tags: ["Education", "Curriculum", "Analysis"], v: { location: 'remote', autonomy: 'manual', social: 'team', reward: 'stable', source: 'solve' } },
+    { id: 'edu_psych_untact', industry: "EduCounsel", title: isKor ? "비대면 심리상담사" : "Untact Psychological Counselor", description: isKor ? "고객의 기분을 세밀하게 살피던 호스피탈리티 정신을 바탕으로 비대면 환경에서도 깊은 공감을 전달합니다." : "Delivers deep empathy even in non-face-to-face environments based on the hospitality spirit of carefully observing customers' moods.", tags: ["Counseling", "Digital", "Service"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'stable', source: 'solve' } },
+    { id: 'life_personal_brand', industry: "Lifestyle", title: isKor ? "퍼스널 브랜딩 컨설턴트" : "Personal Branding Consultant", description: isKor ? "개별 제품의 매력을 극대화하던 기획 경험을 통해 개인의 고유한 브랜딩 가치를 발굴하고 제안합니다." : "Discovers and proposes unique personal branding values through planning experience that maximized the appeal of individual products.", tags: ["Marketing", "Consulting", "Personal Branding"], v: { location: 'remote', autonomy: 'decide', social: 'team', reward: 'high', source: 'solve' } }
   ];
 
   // 2. 가중치 기반 스코어링 시스템 (가점 방식)
@@ -424,6 +432,7 @@ function showPivotResults(lang, skills, formData) {
         <div class="competency-list">
           ${job.tags.map(t => `<span class="comp-tag"># ${t}</span>`).join('')}
         </div>
+        ${job.description ? `<p style="font-size:0.85rem; color:var(--text-color); margin:12px 0; line-height:1.5; background:var(--bg-secondary); padding:10px; border-radius:6px; border-left:4px solid var(--accent-color);"><b>전이 가능한 기술:</b> ${job.description}</p>` : ''}
         <div class="match-reason-box">
           <span class="reason-label">💡 나침반 탐색 리포트</span>
           <p class="reason-text">${job.matchReason}</p>
