@@ -122,6 +122,92 @@ nav a:hover {
   color: var(--secondary-btn);
 }
 
+/* AdSense Optimization Sections */
+.info-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.detailed-info {
+  background: var(--container-bg);
+  padding: 5rem 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detailed-info h2, .faq-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  color: var(--text-color);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.info-card {
+  padding: 2rem;
+  background: var(--bg-color);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+.info-card h4 {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.info-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--secondary-btn);
+}
+
+.faq-section {
+  padding: 5rem 0;
+}
+
+.faq-item {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  background: var(--container-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.faq-q {
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.faq-a {
+  color: var(--secondary-btn);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.faq-a a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .info-grid { grid-template-columns: 1fr; }
+}
+
 /* Footer */
 .main-footer {
   width: 100%;

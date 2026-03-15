@@ -477,21 +477,24 @@ function showPivotResults(lang, skills, transferableSkills, formData) {
   }
 
   resultsDiv.innerHTML = finalResults.map((job, i) => `
-    <div class="job-card" style="animation-delay: ${i * 0.1}s; border: ${job.pivotSkill ? '2px solid #1a202c' : '1px solid var(--border-color)'}">
+    <div class="job-card" style="animation-delay: ${i * 0.1}s; border: ${job.pivotSkill ? '2px solid #1a202c' : '1px solid var(--border-color)'}; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: linear-gradient(to bottom, #ffffff, #f9fafb);">
       ${job.pivotSkill ? `<div style="background:#1a202c; color:white; font-size:0.65rem; padding:2px 8px; position:absolute; top:-10px; left:15px; border-radius:4px; font-weight:700;">최적의 루트 발견</div>` : ''}
-      <div class="nomad-index">
-        <span class="nomad-label">${isKor ? '장소 독립 지수' : 'Nomad Index'}</span>
-        <span class="nomad-stars">${'★'.repeat(job.nomadStars)}${'☆'.repeat(5 - job.nomadStars)}</span>
-      </div>
       <div class="job-card-header">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div class="job-title">${job.title}</div>
-            <div class="job-desc" style="font-size: 13px; color: #718096; margin-top: 4px;">${job.description}</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div style="flex: 1;">
+            <div class="job-title" style="margin-bottom: 4px;">${job.title}</div>
+            <div class="nomad-index" style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+              <span style="font-size: 0.7rem; color: #718096; font-weight: 700;">${isKor ? '장소 독립 지수' : 'Nomad Index'}</span>
+              <span style="font-size: 14px;">${'🌴'.repeat(job.nomadStars)}${'☆'.repeat(5 - job.nomadStars)}</span>
+            </div>
+            <div class="job-desc" style="font-size: 13px; color: #718096;">${job.description}</div>
           </div>
-          <div style="font-size:0.7rem; font-weight:700; color:#4a5568;">매칭 지수: ${Math.min(99, Math.round(job.score * 15))}%</div>
+          <div style="text-align: right; margin-left: 15px;">
+            <div style="font-size:0.7rem; font-weight:700; color:#4a5568;">매칭 지수</div>
+            <div style="font-size:1.1rem; font-weight:800; color:var(--accent-color);">${Math.min(99, Math.round(job.score * 15))}%</div>
+          </div>
         </div>
-        <div class="gauge-container"><div class="gauge-fill" style="width: ${Math.min(100, job.score * 15)}%; background:${job.pivotSkill ? '#1a202c' : 'var(--accent-color)'}"></div></div>
+        <div class="gauge-container" style="margin-top: 12px;"><div class="gauge-fill" style="width: ${Math.min(100, job.score * 15)}%; background:${job.pivotSkill ? '#1a202c' : 'var(--accent-color)'}"></div></div>
       </div>
       <div class="job-card-body">
         <div class="competency-list">
