@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jihyun9712-kor.github.io/builder-lecture/sitemap.xml
